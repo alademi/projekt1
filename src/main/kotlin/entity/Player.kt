@@ -2,8 +2,8 @@ package entity
 
 class Player(
     val name : String ,
-    val score : Int ,
-    val playerCards : List<Card>,
+    var score : Int ,
+    var playerCards : List<Card>,
 )
 {
 }
