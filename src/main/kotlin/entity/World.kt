@@ -1,10 +1,12 @@
 package entity
 
 class World (
-    var middleCards : List<Card> ,
-    var moveCount : Int ,
-    var passCount : Int ,
-    var hasPlayerKnocked : Boolean
+    val middleCards : List<Card> ,
+    val moveCount : Int = 0 ,
+    val passCount : Int = 0 ,
+    val hasPlayerKnocked : Boolean,
+    val players : List<Player>,
+    val cardDeck: Array<Card?> = arrayOfNulls<Card>(32)
     )
 {
 
