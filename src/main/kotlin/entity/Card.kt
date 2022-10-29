@@ -11,7 +11,5 @@ data class Card (
     val symbol : CardSuit
         )
 {
-    override fun toString(): String {
-        return "$symbol$number"
-    }
+
 }

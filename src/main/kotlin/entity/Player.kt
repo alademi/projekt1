@@ -5,12 +5,12 @@ package entity
  *
  * @param name Name der Spieler
  * @param score Punktezahl der Spieler
- * @param playerCards die Karten der Spieler ( die sind insgesamt 3 Karten )
+ * @param playerCards die 3 Karten der Spieler
  */
 
 class Player(
     val name : String ,
-    var score : Int ,
+    var score : Double ,
     var playerCards : List<Card>,
 )
 {
