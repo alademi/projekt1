@@ -4,6 +4,7 @@ import entity.Card
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNotSame
 
 
 /**
@@ -32,7 +33,7 @@ class PlayerTest {
     private val player3 = Player("Jack", 30.5 ,listCards1)
     private val player4 = Player("Kim", 20.0, listCards3)
     private val player5 = Player("Tom", 20.0, listCards1)
-
+    private val player6 =  Player("Abdul", 20.0, listCards1)
 
     /**
      * vergleiche zwischen zwei unterschiedlichen Spieler
@@ -44,6 +45,7 @@ class PlayerTest {
         assertNotEquals(player1,player3)
         assertNotEquals(player1,player4)
         assertNotEquals(player1,player5)
+        assertNotSame(player1,player6)
         assertEquals(player1.name,player2.name)
         assertEquals(player1.score,player4.score)
         assertEquals(player1.playerCards,player5.playerCards)
