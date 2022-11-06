@@ -1,5 +1,8 @@
 package entity
 
+import service.CardDeckStack
+import tools.aqua.bgw.components.container.CardStack
+
 /**
  * In dieser Data-Klasse werden die wichtigen Daten zur Erstellung eines Weltes im Spiel gespeichert .
  *
@@ -10,14 +13,13 @@ package entity
  * @param cardDeck liste der Karten im Nachziehstapel ( das sind genau 32 Karten )
  */
 
-data class World (
-    var middleCards : List<Card> ,
-    var moveCount : Int = 0 ,
-    var passCount : Int = 0 ,
-    var hasPlayerKnocked : Boolean = false,
-    var players : List<Player>,
-    var cardDeck: List<Card>
-    )
-{
+data class World(
+    var middleCards: MutableList<Card> = mutableListOf(),
+    var moveCount: Int,
+    var passCount: Int,
+    var playerList: List<Player>,
+    var cardDeck: CardDeckStack
+) {
+
 
 }
