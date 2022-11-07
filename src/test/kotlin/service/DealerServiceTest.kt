@@ -5,6 +5,7 @@ import entity.CardSuit
 import entity.CardValue
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class DealerServiceTest {
     private val card1 = Card( CardValue.ACE,  CardSuit.CLUBS)
@@ -34,7 +35,7 @@ class DealerServiceTest {
     @Test
     fun test()
     {
-        val playerlist = listOf<String>("Aziz" , "Ahmed" , "Ali" ,"Sam")
+        val playerlist = listOf<String>("Aziz" , "Tom" , "Ali" ,"Sam")
         val game = MainService()
         game.startNewGame(playerlist)
         val points1 = game.dealerService.calculatePoints(listCards1)
@@ -47,6 +48,18 @@ class DealerServiceTest {
         assertEquals(points3,18.0)
         assertEquals(points4,10.0)
         assertEquals(points5,30.5)
+        val middleCards = game.dealerService.getMiddleCards()
+        assertEquals(middleCards.size,3)
+        assertNotNull(middleCards)
+        val cardDeck = game.dealerService.getDeck()
+        assertNotNull(cardDeck)
+        val playerCard = game.dealerService.getPlayerCards(game.currentGame!!.playerList[game.currentGame!!.moveCount])
+        assertNotNull(playerCard)
+        assertEquals(playerCard.size,3)
+        val currentPlayer = game.dealerService.currentPlayer()
+        assertNotNull(currentPlayer)
+        val nextPlayer = game.dealerService.getNextPlayer()
+        assertNotNull((nextPlayer))
 
 
     }

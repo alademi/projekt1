@@ -26,7 +26,7 @@ class DealerService(private val mainService: MainService) : RefreshableService()
                 return points
 
             }
-          return  cardPoint1 + cardPoint2
+            return cardPoint1 + cardPoint2
 
 
         } else if (card1.symbol == card3.symbol) {
@@ -42,7 +42,7 @@ class DealerService(private val mainService: MainService) : RefreshableService()
                 return 30.5
 
             }
-            return max(cardPoint1, max(cardPoint2,cardPoint3))
+            return max(cardPoint1, max(cardPoint2, cardPoint3))
         }
 
     }
@@ -94,19 +94,16 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     fun endOfMove() {
         val game = mainService.currentGame
-        if(!gameEnd()) {
-            if(game!!.passCount == game.playerList.size)
-            {
+        if (!gameEnd()) {
+            if (game!!.passCount == game.playerList.size) {
                 game.middleCards = game.cardDeck.draw(3)
-                onAllRefreshables {refreshMiddleCard()}
+                onAllRefreshables { refreshMiddleCard() }
             }
             var moveCount = game.moveCount++
             moveCount = (moveCount % game.playerList.size)
             onAllRefreshables { refreshAfterMove() }
             showNextPlayer()
-        }
-        else
-        {
+        } else {
             mainService.exitGame()
         }
 
@@ -131,7 +128,7 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     private fun gameEnd(): Boolean {
         val game = mainService.currentGame
-        if (game!!.passCount == game.playerList.size && game.middleCards.size <= 2) {
+        if (game!!.passCount == game.playerList.size && game.cardDeck.size <= 2) {
             return true
         }
 

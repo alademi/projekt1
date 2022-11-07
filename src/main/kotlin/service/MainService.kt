@@ -72,7 +72,7 @@ class MainService() : RefreshableService() {
             highScoreList[player] = player.score
         }
 
-        return highScoreList
+        return highScoreList.toList().sortedBy { (_, value) -> value}.toMap()
     }
 
 
