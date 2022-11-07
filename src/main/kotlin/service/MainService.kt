@@ -46,7 +46,7 @@ class MainService() : RefreshableService() {
 
     }
 
-     fun defaultCardDeck() = MutableList(32) { index ->
+     private fun defaultCardDeck() = MutableList(32) { index ->
         Card(
             CardValue.values()[(index % 8) + 5],
             CardSuit.values()[index / 8]
