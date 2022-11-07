@@ -19,15 +19,12 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
         currentPlayer.hasPlayerKnocked = true
         resetPass()
         mainService.dealerService.endOfMove()
-        mainService.dealerService.showNextPlayer()
-
     }
 
     fun pass() {
         val game = mainService.currentGame
         game!!.passCount++
         mainService.dealerService.endOfMove()
-        mainService.dealerService.showNextPlayer()
     }
 
     fun changeSingleCard(pCard: Card, mCard: Card) {
@@ -41,7 +38,6 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
         middleCards.add(pCard)
         resetPass()
         mainService.dealerService.endOfMove()
-        mainService.dealerService.showNextPlayer()
     }
 
     fun changeAllCards() {
@@ -54,12 +50,11 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
         mainService.currentGame!!.playerList[index].playerCards = middleCards
         resetPass()
         mainService.dealerService.endOfMove()
-        mainService.dealerService.showNextPlayer()
     }
 
     private fun resetPass() {
         val game = mainService.currentGame
-        game!!.passCount++
+        game!!.passCount = 0
     }
 
 }

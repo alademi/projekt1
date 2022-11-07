@@ -23,29 +23,28 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         if (card1.symbol == card2.symbol) {
             if (card2.symbol == card3.symbol) {
                 points = cardPoint1 + cardPoint2 + cardPoint3
+                return points
 
             }
-            points = cardPoint1 + cardPoint2
+          return  cardPoint1 + cardPoint2
 
 
         } else if (card1.symbol == card3.symbol) {
-            points = cardPoint1 + cardPoint3
+            return cardPoint1 + cardPoint3
+
 
         } else if (card2.symbol == card3.symbol) {
-            points = cardPoint2 + cardPoint3
+            return cardPoint2 + cardPoint3
 
         } else {
 
             if (card1.number == card2.number && card1.number == card3.number) {
-                points = 30.5
+                return 30.5
 
-            } else {
-                var max = max(cardPoint1, max(cardPoint2, cardPoint3))
-                max = points
             }
-
+            return max(cardPoint1, max(cardPoint2,cardPoint3))
         }
-        return points
+
     }
 
     private fun cardValues(card: Card): Double {
@@ -95,20 +94,53 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     fun endOfMove() {
         val game = mainService.currentGame
-        var moveCount = game!!.moveCount++
-        moveCount = (moveCount % game.playerList.size)
-        onAllRefreshables { refreshAfterMove() }
+        if(!gameEnd()) {
+            if(game!!.passCount == game.playerList.size)
+            {
+                game.middleCards = game.cardDeck.draw(3)
+                onAllRefreshables {refreshMiddleCard()}
+            }
+            var moveCount = game.moveCount++
+            moveCount = (moveCount % game.playerList.size)
+            onAllRefreshables { refreshAfterMove() }
+            showNextPlayer()
+        }
+        else
+        {
+            mainService.exitGame()
+        }
+
     }
 
-     fun currentPlayer(): Player {
+    fun currentPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
         return game.playerList[index]
     }
 
+    fun getNextPlayer(): Player {
+        val game = mainService.currentGame
+        val index = game!!.moveCount
+        return game.playerList[index + 1]
+    }
+
     fun showNextPlayer() {
         onAllRefreshables { refreshHandCards() }
         onAllRefreshables { refreshPlayerLabel() }
+    }
+
+    private fun gameEnd(): Boolean {
+        val game = mainService.currentGame
+        if (game!!.passCount == game.playerList.size && game.middleCards.size <= 2) {
+            return true
+        }
+
+        if (getNextPlayer().hasPlayerKnocked) {
+            return true
+        }
+
+        return false
+
     }
 
 }

@@ -16,10 +16,10 @@ enum class CardSuit {
      * Returns one of: ♣/♠/♥/♦
      */
     override fun toString() = when(this) {
-        CLUBS -> "♣"
-        SPADES -> "♠"
-        HEARTS -> "♥"
-        DIAMONDS -> "♦"
+        CLUBS -> "♣" //Kreuz
+        SPADES -> "♠" //Pik
+        HEARTS -> "♥"  //Herz
+        DIAMONDS -> "♦" //Karo
     }
 
 
