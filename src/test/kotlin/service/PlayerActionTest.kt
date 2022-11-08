@@ -2,6 +2,7 @@ package service
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -31,12 +32,12 @@ class PlayerActionTest {
     fun testSwapAll() {
          val game = MainService()
         game.startNewGame(playerList)
-        val player2 = game.dealerService.getCurrentPlayer()
-        val playerCards2 = game.dealerService.getPlayerCards(player2)
-        val middleCards2 = game.dealerService.getMiddleCards()
+        val player = game.dealerService.getCurrentPlayer()
+        val playerCards = game.dealerService.getPlayerCards(player)
+        val middleCards = game.dealerService.getMiddleCards()
         game.playerActionService.changeAllCards()
-        assertEquals(game.currentGame!!.middleCards, playerCards2)
-        assertEquals(player2.playerCards, middleCards2)
+        assertEquals(game.currentGame!!.middleCards, playerCards)
+        assertEquals(player.playerCards, middleCards)
     }
 
     @Test
@@ -44,9 +45,22 @@ class PlayerActionTest {
     {
          val game = MainService()
         game.startNewGame(playerList)
+        val player1 = game.dealerService.getCurrentPlayer()
+        assertFalse(player1.hasPlayerKnocked)
         game.playerActionService.knock()
-        val player3 = game.dealerService.getPreviousPlayer()
-        assertTrue(player3.hasPlayerKnocked)
+        val player2 = game.dealerService.getPreviousPlayer()
+        assertTrue(player2.hasPlayerKnocked)
 
     }
+
+    @Test
+    fun testPass()
+    {
+        val game = MainService()
+        game.startNewGame(playerList)
+        assertEquals(game.currentGame!!.passCount,0)
+        game.playerActionService.pass()
+        assertEquals(game.currentGame!!.passCount,1)
+    }
+
 }
