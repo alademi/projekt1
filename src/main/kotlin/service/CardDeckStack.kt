@@ -3,8 +3,11 @@ package service
 import entity.Card
 import kotlin.random.Random
 
-class CardDeckStack(private val random: Random = Random) {
+/**
+ * Diese Klasse basiert auf das [Beispiel War]
+ */
 
+class CardDeckStack(private val random: Random = Random) {
 
     /**
      * Data structure that holds [WarCard] objects and provides stack-like

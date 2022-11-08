@@ -26,8 +26,8 @@ class WorldTest {
     private val player3 = Player("Jack", 30.5 ,listCards1,false)
     private val player4 = Player("Kim", 20.0, listCards2,false)
 
-    private val playerList1 = listOf<Player>(player1,player2,player3)
-    private val playerList2 = listOf<Player>(player1,player2,player4)
+    private val playerList1 = mutableListOf<Player>(player1,player2,player3)
+    private val playerList2 = mutableListOf<Player>(player1,player2,player4)
 
     var cardStack = CardDeckStack()
 

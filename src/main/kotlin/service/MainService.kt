@@ -3,17 +3,20 @@ package service
 import entity.*
 import view.Refreshable
 
+/**
+ * Diese Klasse
+ */
 
 class MainService() : RefreshableService() {
     var currentGame: World? = null
     var playerActionService = PlayerActionService(this)
     var dealerService = DealerService(this)
-    var cardStack : CardDeckStack ? = null
+    var cardStack: CardDeckStack? = null
 
 
     fun startNewGame(namesList: List<String>) {
         val cardDeck = defaultCardDeck()
-         cardStack = CardDeckStack()
+        cardStack = CardDeckStack()
         cardStack!!.putOnTop(cardDeck)
         cardStack!!.shuffle()
         val middleCards = cardStack!!.draw(3)
@@ -27,7 +30,7 @@ class MainService() : RefreshableService() {
 
     }
 
-    fun playerSetting(namesList: List<String>): List<Player> {
+    fun playerSetting(namesList: List<String>): MutableList<Player> {
 
         val playerList = mutableListOf<Player>()
 
@@ -39,14 +42,13 @@ class MainService() : RefreshableService() {
         return playerList
     }
 
-    fun exitGame(): Map<Player, Double> {
-        val game = currentGame
+    fun exitGame() {
+        highScoreList()
         onAllRefreshables { refreshAfterGameEnd() }
-        return highScoreMap(currentGame!!.playerList)
 
     }
 
-     private fun defaultCardDeck() = MutableList(32) { index ->
+    private fun defaultCardDeck() = MutableList(32) { index ->
         Card(
             CardValue.values()[(index % 8) + 5],
             CardSuit.values()[index / 8]
@@ -54,26 +56,22 @@ class MainService() : RefreshableService() {
     }.shuffled()
 
 
-    override fun addRefreshable(newRefreshable: Refreshable) {
-        this.addRefreshable(newRefreshable)
-        playerActionService.addRefreshable(newRefreshable)
-        dealerService.addRefreshable(newRefreshable)
+    override fun addRefreshable(re: Refreshable) {
+        this.addRefreshable(re)
+        playerActionService.addRefreshable(re)
+        dealerService.addRefreshable(re)
     }
 
     fun addRefreshables(vararg newRefreshables: Refreshable) {
         newRefreshables.forEach { addRefreshable(it) }
     }
 
-   private fun highScoreMap(playersList: List<Player>): Map<Player, Double> {
-        val highScoreList = mutableMapOf<Player, Double>()
-
+    private fun highScoreList()  {
+        val playersList = currentGame!!.playerList
         for (player in playersList) {
             player.score = dealerService.calculatePoints(player.playerCards)
-            highScoreList[player] = player.score
         }
-
-        return highScoreList.toList().sortedBy { (_, value) -> value}.toMap()
+         playersList.sortByDescending{it.score}
     }
-
 
 }

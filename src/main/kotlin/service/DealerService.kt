@@ -1,6 +1,7 @@
 package service
 
 import entity.Card
+import entity.CardValue
 import entity.Player
 import kotlin.math.max
 
@@ -11,8 +12,7 @@ class DealerService(private val mainService: MainService) : RefreshableService()
             "Every Player should have 3 Cards , was ${playerCards.size}"
         }
 
-        var points = 0.0
-
+        val points: Double
         val card1 = playerCards[0]
         val card2 = playerCards[1]
         val card3 = playerCards[2]
@@ -48,34 +48,18 @@ class DealerService(private val mainService: MainService) : RefreshableService()
     }
 
     private fun cardValues(card: Card): Double {
-        if (card.number.name == "SIX") {
-            return 6.0
+        val points = when(card.number){
+            CardValue.SEVEN -> 7.0
+            CardValue.EIGHT -> 8.0
+            CardValue.NINE -> 9.0
+            CardValue.TEN -> 10.0
+            CardValue.QUEEN -> 10.0
+            CardValue.KING -> 10.0
+            CardValue.JACK -> 10.0
+            CardValue.ACE -> 11.0
+            else -> 0.0
         }
-        if (card.number.name == "SEVEN") {
-            return 7.0
-        }
-        if (card.number.name == "EIGHT") {
-            return 8.0
-        }
-        if (card.number.name == "NINE") {
-            return 9.0
-        }
-        if (card.number.name == "TEN") {
-            return 10.0
-        }
-        if (card.number.name == "JACK") {
-            return 10.0
-        }
-        if (card.number.name == "QUEEN") {
-            return 10.0
-        }
-        if (card.number.name == "KING") {
-            return 10.0
-        }
-        if (card.number.name == "ACE") {
-            return 11.0
-        }
-        return 0.0
+        return points
     }
 
     fun getMiddleCards(): MutableList<Card> {
