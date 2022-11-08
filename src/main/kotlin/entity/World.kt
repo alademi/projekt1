@@ -1,8 +1,5 @@
 package entity
 
-import service.CardDeckStack
-import tools.aqua.bgw.components.container.CardStack
-
 /**
  * In dieser Data-Klasse werden die wichtigen Daten zur Erstellung eines Weltes im Spiel gespeichert .
  *
