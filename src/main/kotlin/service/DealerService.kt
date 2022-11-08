@@ -7,11 +7,16 @@ import entity.Player
 import kotlin.math.max
 
 /**
- *
+ * eine Klasse von Server-Schicht, die bei der implementierung der Aktionen von Spieler verwendet wird.
  */
 
 class DealerService(private val mainService: MainService) : RefreshableService() {
 
+    /**
+     * eine Methode zur Berechnung der Punkte der 3 Karten
+     * @param playerCards die 3 Karten der Spieler
+     * gibt die Anzahl Punkte als Double zurück
+     */
     fun calculatePoints(playerCards: List<Card>): Double {
         require(playerCards.size == 3) {
             "Every Player should have 3 Cards , was ${playerCards.size}"
@@ -52,8 +57,12 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     }
 
+    /**
+     * Hilfsmethode für die Methode [calculatePoints]
+     */
+
     private fun cardValues(card: Card): Double {
-        val points = when(card.number){
+        val points = when (card.number) {
             CardValue.SEVEN -> 7.0
             CardValue.EIGHT -> 8.0
             CardValue.NINE -> 9.0
@@ -81,6 +90,13 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         return player.playerCards
     }
 
+    /**
+     * Diese Methode wird nach jeder Spieler Aktion aufgerufen , um das Hotseat-Modus zu erfüllen
+     * Dabei wird immer anhand die Hilfsmethode [gameEnd] überprüft , ob das Spiel zu beenden ist.
+     * Falls nicht, wird zusätzlich überprüft , dass der Fall (passCounter == Player.list.size ) erfüllt wurde.
+     *
+     */
+
     fun endOfMove() {
         val game = mainService.currentGame
         if (!gameEnd()) {
@@ -88,13 +104,24 @@ class DealerService(private val mainService: MainService) : RefreshableService()
                 game.middleCards = game.cardDeck.draw(3)
                 onAllRefreshables { refreshMiddleCard() }
             }
-             game.moveCount++
+            game.moveCount++
             onAllRefreshables { refreshAfterMove() }
             showNextPlayer()
         } else {
             mainService.exitGame()
         }
+    }
 
+
+    private fun gameEnd(): Boolean {
+        val game = mainService.currentGame
+        if (game!!.passCount == game.playerList.size && game.cardDeck.size <= 2) {
+            return true
+        }
+        if (getNextPlayer().hasPlayerKnocked) {
+            return true
+        }
+        return false
     }
 
     fun getCurrentPlayer(): Player {
@@ -120,18 +147,5 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         onAllRefreshables { refreshPlayerLabel() }
     }
 
-    private fun gameEnd(): Boolean {
-        val game = mainService.currentGame
-        if (game!!.passCount == game.playerList.size && game.cardDeck.size <= 2) {
-            return true
-        }
-
-        if (getNextPlayer().hasPlayerKnocked) {
-            return true
-        }
-
-        return false
-
-    }
 
 }
