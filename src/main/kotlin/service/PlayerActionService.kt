@@ -7,15 +7,14 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
 
     fun knock() {
         val game = mainService.currentGame
-        val playerIndex = game!!.moveCount
-        val playerList = game.playerList
+        val playerList = game!!.playerList
 
         for (player in playerList) {
             if (player.hasPlayerKnocked) {
                 throw IllegalArgumentException("already knocked")
             }
         }
-        val currentPlayer = mainService.dealerService.currentPlayer()
+        val currentPlayer = mainService.dealerService.getCurrentPlayer()
         currentPlayer.hasPlayerKnocked = true
         resetPass()
         mainService.dealerService.endOfMove()
@@ -28,14 +27,16 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
     }
 
     fun changeSingleCard(pCard: Card, mCard: Card) {
-        val game = mainService.currentGame
-        val player = mainService.dealerService.currentPlayer()
+
+        val player = mainService.dealerService.getCurrentPlayer()
         val playerCards = mainService.dealerService.getPlayerCards(player)
         val middleCards = mainService.dealerService.getMiddleCards()
+
         playerCards.remove(pCard)
-        middleCards.remove(mCard)
         playerCards.add(mCard)
+        middleCards.remove(mCard)
         middleCards.add(pCard)
+
         resetPass()
         mainService.dealerService.endOfMove()
     }
@@ -43,7 +44,7 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
     fun changeAllCards() {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        val player = mainService.dealerService.currentPlayer()
+        val player = mainService.dealerService.getCurrentPlayer()
         val playerCards = mainService.dealerService.getPlayerCards(player)
         val middleCards = mainService.dealerService.getMiddleCards()
         mainService.currentGame!!.middleCards = playerCards

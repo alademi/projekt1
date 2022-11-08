@@ -93,7 +93,7 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     }
 
-    fun currentPlayer(): Player {
+    fun getCurrentPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
         return game.playerList[index]

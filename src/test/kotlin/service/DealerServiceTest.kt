@@ -56,7 +56,7 @@ class DealerServiceTest {
         val playerCard = game.dealerService.getPlayerCards(game.currentGame!!.playerList[game.currentGame!!.moveCount])
         assertNotNull(playerCard)
         assertEquals(playerCard.size,3)
-        val currentPlayer = game.dealerService.currentPlayer()
+        val currentPlayer = game.dealerService.getCurrentPlayer()
         assertNotNull(currentPlayer)
         val nextPlayer = game.dealerService.getNextPlayer()
         assertNotNull((nextPlayer))

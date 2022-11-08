@@ -45,7 +45,14 @@ class MainService() : RefreshableService() {
     fun exitGame() {
         highScoreList()
         onAllRefreshables { refreshAfterGameEnd() }
+    }
 
+    private fun highScoreList()  {
+        val playersList = currentGame!!.playerList
+        for (player in playersList) {
+            player.score = dealerService.calculatePoints(player.playerCards)
+        }
+        playersList.sortByDescending{it.score}
     }
 
     private fun defaultCardDeck() = MutableList(32) { index ->
@@ -64,14 +71,6 @@ class MainService() : RefreshableService() {
 
     fun addRefreshables(vararg newRefreshables: Refreshable) {
         newRefreshables.forEach { addRefreshable(it) }
-    }
-
-    private fun highScoreList()  {
-        val playersList = currentGame!!.playerList
-        for (player in playersList) {
-            player.score = dealerService.calculatePoints(player.playerCards)
-        }
-         playersList.sortByDescending{it.score}
     }
 
 }
