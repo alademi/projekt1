@@ -1,10 +1,7 @@
 package service
 
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 
 class PlayerActionTest {
@@ -61,6 +58,11 @@ class PlayerActionTest {
         assertEquals(game.currentGame!!.passCount,0)
         game.playerActionService.pass()
         assertEquals(game.currentGame!!.passCount,1)
+        val middleCards1 = game.dealerService.getMiddleCards()
+        game.currentGame!!.passCount=game.currentGame!!.playerList.size-1
+        game.playerActionService.pass()
+        val middleCards2 = game.dealerService.getMiddleCards()
+        assertNotEquals(middleCards1,middleCards2)
     }
 
 }
