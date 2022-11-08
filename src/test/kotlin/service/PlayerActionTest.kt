@@ -7,32 +7,43 @@ import kotlin.test.assertTrue
 
 
 class PlayerActionTest {
-    val playerlist = listOf<String>("Aziz", "Ahmed", "Ali", "Sam")
+    private val playerList = listOf("Aziz", "Ahmed", "Ali", "Sam")
 
     @Test
-    fun test()
-    {
+    fun testSwapOne() {
         val game = MainService()
-        game.startNewGame(playerlist)
+        game.startNewGame(playerList)
         val player = game.dealerService.getCurrentPlayer()
         assertNotNull(player)
         val playerCards = game.dealerService.getPlayerCards(player)
         val middleCards = game.dealerService.getMiddleCards()
         assertNotNull(playerCards)
         assertNotNull(middleCards)
-        val pcard = playerCards[0]
-        val mcard = middleCards[1]
-        assertNotNull(pcard)
-        assertNotNull(mcard)
-        game.playerActionService.changeSingleCard(pcard,mcard)
-        assertEquals(middleCards[2],pcard)
-        assertEquals(playerCards[2],mcard)
+        val pCard = playerCards[0]
+        val mCard = middleCards[1]
+        assertNotNull(pCard)
+        assertNotNull(mCard)
+        game.playerActionService.changeSingleCard(pCard, mCard)
+        assertEquals(middleCards[2], pCard)
+        assertEquals(playerCards[2], mCard)
+    }
+    @Test
+    fun testSwapAll() {
+         val game = MainService()
+        game.startNewGame(playerList)
         val player2 = game.dealerService.getCurrentPlayer()
         val playerCards2 = game.dealerService.getPlayerCards(player2)
         val middleCards2 = game.dealerService.getMiddleCards()
         game.playerActionService.changeAllCards()
-        assertEquals(game.currentGame!!.middleCards,playerCards2)
-        assertEquals(player2.playerCards,middleCards2)
+        assertEquals(game.currentGame!!.middleCards, playerCards2)
+        assertEquals(player2.playerCards, middleCards2)
+    }
+
+    @Test
+    fun testKnock()
+    {
+         val game = MainService()
+        game.startNewGame(playerList)
         game.playerActionService.knock()
         val player3 = game.dealerService.getPreviousPlayer()
         assertTrue(player3.hasPlayerKnocked)
