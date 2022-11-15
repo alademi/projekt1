@@ -83,7 +83,7 @@ class MainService()   {
         for (player in playersList) {
             player.score = dealerService.calculatePoints(player.playerCards)
         }
-        playersList.sortByDescending{it.score}
+        playersList.sortedByDescending{it.score}
     }
 
 

@@ -102,9 +102,10 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         if (!gameEnd()) {
             if (game!!.passCount == game.playerList.size) {
                 game.middleCards = game.cardDeck.draw(3)
-                onAllRefreshables { refreshMiddleCard() }
+                game.passCount = 0
             }
             game.moveCount++
+            onAllRefreshables { refreshMiddleCard() }
             onAllRefreshables { refreshAfterMove() }
             showNextPlayer()
         } else {
@@ -127,19 +128,22 @@ class DealerService(private val mainService: MainService) : RefreshableService()
     fun getCurrentPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        return game.playerList[index]
+        val size  = game.playerList.size
+        return game.playerList[index%size]
     }
 
     fun getPreviousPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        return game.playerList[index - 1]
+        val size  = game.playerList.size
+        return game.playerList[(index - 1)%size]
     }
 
     fun getNextPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        return game.playerList[index + 1]
+        val size  = game.playerList.size
+        return game.playerList[(index + 1)%size]
     }
 
     fun showNextPlayer() {

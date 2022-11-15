@@ -14,7 +14,7 @@ data class World(
     var middleCards: MutableList<Card> = mutableListOf(),
     var moveCount: Int,
     var passCount: Int,
-    var playerList: MutableList<Player> = mutableListOf(),
+    var playerList:List<Player>,
     var cardDeck: CardDeckStack
 ) {
 

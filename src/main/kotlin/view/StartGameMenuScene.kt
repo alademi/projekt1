@@ -10,9 +10,9 @@ import tools.aqua.bgw.visual.ColorVisual
 
 class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 1080), Refreshable {
 
-    var playerList = mutableListOf<String>()
-    var player3 : Boolean = false
-    var player4 : Boolean = false
+    var nameList = mutableListOf<String>()
+    var player3: Boolean = false
+    var player4: Boolean = false
     var addPlayerCounter = 0
 
 
@@ -54,6 +54,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         }
     }
 
+
     private val p3Label = Label(
         width = 100, height = 35,
         posX = 50, posY = 215,
@@ -68,7 +69,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         onKeyTyped = {
             startButton.isDisabled = p1Input.text.isBlank() || this.text.isBlank()
         }
-        player3 = true
+
     }
 
     private val p4Label = Label(
@@ -85,8 +86,8 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         onKeyTyped = {
             startButton.isDisabled = p1Input.text.isBlank() || this.text.isBlank()
         }
-        player4 = true
     }
+
 
     val quitButton = Button(
         width = 140, height = 35,
@@ -97,7 +98,6 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     }
 
 
-
     private val startButton = Button(
         width = 140, height = 35,
         posX = 180, posY = 360,
@@ -105,7 +105,9 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     ).apply {
         visual = ColorVisual(136, 221, 136)
         onMouseClicked = {
-           mainService.startNewGame(playerList)
+            addNames()
+            println(nameList)
+            mainService.startNewGame(nameList)
         }
     }
 
@@ -114,7 +116,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         posX = 180, posY = 320,
         text = "Add Player"
     ).apply {
-        visual = ColorVisual(136,136,221)
+        visual = ColorVisual(136, 136, 221)
         onMouseClicked = {
             addPlayerCounter++
             addPlayer(addPlayerCounter)
@@ -132,33 +134,35 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         )
     }
 
-    private fun addNames()
-    {
-        playerList.add(p1Input.text)
-        playerList.add(p2Input.text)
 
-        if(player3) {
-            playerList.add(p3Input.text)
+    private fun addNames() {
+        this.nameList.add(p1Input.text)
+        this.nameList.add(p2Input.text)
+
+        if (player3) {
+            this.nameList.add(p3Input.text)
         }
 
-        if(player4)
-        {
-            playerList.add(p4Input.text)
+        if (player4) {
+            this.nameList.add(p4Input.text)
+        }
+
+
+    }
+
+
+    private fun addPlayer(countPlayer: Int) {
+        if (addPlayerCounter == 1) {
+            player3 = true
+            addComponents(p3Label, p3Input)
+        }
+
+        if (addPlayerCounter == 2) {
+            player4 = true
+            addComponents(p4Label, p4Input)
         }
     }
 
-    private fun addPlayer(countPlayer : Int)
-    {
-        if (addPlayerCounter == 1)
-        {
-            addComponents(p3Label,p3Input)
-        }
-
-        if (addPlayerCounter == 2 )
-        {
-            addComponents(p4Label,p4Input)
-        }
-    }
 
     override fun refreshAfterStartNewGame() {
 
@@ -172,6 +176,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     }
 
     override fun refreshMiddleCard() {
+
     }
 
     override fun refreshAfterMove() {
@@ -180,9 +185,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     override fun refreshAfterGameEnd() {
     }
 
-    override fun refreshGameSetting() {
 
-    }
 
 
 }

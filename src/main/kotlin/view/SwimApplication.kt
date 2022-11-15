@@ -22,7 +22,7 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
     startGameMenuScene
    )
 
-   mainService.startNewGame(startGameMenuScene.playerList)
+ //mainService.startNewGame(startGameMenuScene.)
    this.showGameScene(gameScene)
    this.showMenuScene(startGameMenuScene, 0)
   }
@@ -51,9 +51,7 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
  }
 
- override fun refreshGameSetting() {
 
- }
 
 }
 

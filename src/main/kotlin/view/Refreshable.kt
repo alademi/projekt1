@@ -8,7 +8,6 @@ interface Refreshable {
     fun refreshMiddleCard()
     fun refreshAfterMove()
     fun refreshAfterGameEnd()
-    fun refreshGameSetting()
 
 
     }
