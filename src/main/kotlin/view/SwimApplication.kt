@@ -5,52 +5,65 @@ import service.MainService
 
 class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
- private val mainService = MainService()
+    private val mainService = MainService()
 
- private val startGameMenuScene = StartGameMenuScene(mainService).apply {
-  quitButton.onMouseClicked = {
-   exit()
-  }
- }
+    private val startGameMenuScene = StartGameMenuScene(mainService).apply {
+        quitButton.onMouseClicked = {
+            exit()
+        }
+    }
 
- private val gameScene = GameTableScene(mainService)
+    private val gameScene = GameTableScene(mainService)
 
-  init {
-   mainService.addRefreshables(
-    this,
-   gameScene,
-    startGameMenuScene
-   )
 
- //mainService.startNewGame(startGameMenuScene.)
-   this.showGameScene(gameScene)
-   this.showMenuScene(startGameMenuScene, 0)
-  }
+    private val rankingScene = RankingScene(mainService).apply {
+        newGameButton.onMouseClicked = {
 
- override fun refreshAfterStartNewGame() {
-  this.hideMenuScene()
- }
+            this@SwimApplication.showMenuScene(startGameMenuScene)
+        }
+        quitButton.onMouseClicked =
+            {
+                exit()
 
- override fun refreshHandCards() {
+            }
+    }
 
- }
+    init {
+        mainService.addRefreshables(
+            this,
+            gameScene,
+            startGameMenuScene,
+            rankingScene
 
- override fun refreshPlayerLabel() {
+        )
 
- }
+        //mainService.startNewGame(startGameMenuScene.)
+        this.showGameScene(gameScene)
+        this.showMenuScene(startGameMenuScene, 0)
+    }
 
- override fun refreshMiddleCard() {
+    override fun refreshAfterStartNewGame() {
+        this.hideMenuScene()
+    }
 
- }
+    override fun refreshHandCards() {
+    }
 
- override fun refreshAfterMove() {
+    override fun refreshPlayerLabel() {
 
- }
+    }
 
- override fun refreshAfterGameEnd() {
+    override fun refreshMiddleCard() {
 
- }
+    }
 
+    override fun refreshAfterMove() {
+
+    }
+
+    override fun refreshAfterGameEnd() {
+        this.showMenuScene(rankingScene)
+    }
 
 
 }

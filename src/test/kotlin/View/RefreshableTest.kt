@@ -55,13 +55,7 @@ class RefreshableTest : Refreshable {
         refreshAfterGameEnd = true
     }
 
-    override fun refreshButtons() {
-        refreshButtons = true
-    }
 
-    override fun refreshGameSetting() {
-        refreshGameSetting = true
-    }
 
 
 }

@@ -56,7 +56,11 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         text = "Swap",
         font = Font(size = 22)
     ).apply {
-        onMouseClicked = { }
+        onMouseClicked = {
+            mainService.playerActionService.changeSingleCard(
+                mainService.dealerService.getCurrentPlayer().playerCards[0], mainService.currentGame!!.middleCards[0]
+            )
+        }
     }
 
     private val swapAllButton = Button(
@@ -180,12 +184,11 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     override fun refreshAfterMove() {
         val game = mainService.currentGame
-        checkNotNull(game) {"No started game found"}
+        checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
         initializeStackView(game.cardDeck, PlayStack, cardImageLoader)
         PassCounter.text = "Pass Counter : ${game.passCount}"
-        if(mainService.dealerService.getPreviousPlayer().hasPlayerKnocked)
-        {
+        if (mainService.dealerService.getPreviousPlayer().hasPlayerKnocked) {
             hasPlayerKnocked.text = "Knocked : Yes"
         }
 
@@ -194,7 +197,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     override fun refreshHandCards() {
         val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
-        checkNotNull(game) {"No started game found"}
+        checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
         initializeCardView(currentPlayer.playerCards, currentPlayerHand, cardImageLoader)
     }
@@ -202,21 +205,21 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     override fun refreshPlayerLabel() {
         val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
-        checkNotNull(game) {"No started game found"}
+        checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
         playerName.text = "Player: ${currentPlayer.name}"
     }
 
     override fun refreshMiddleCard() {
         val game = mainService.currentGame
-        checkNotNull(game) {"No started game found"}
+        checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
         initializeCardView(game.middleCards, middleCards, cardImageLoader)
     }
 
 
     override fun refreshAfterGameEnd() {
-        TODO("Not yet implemented")
+
     }
 
 

@@ -71,7 +71,7 @@ class MainService()   {
      */
     fun exitGame() {
         findWinner()
-       // onAllRefreshables { refreshAfterGameEnd() }
+        dealerService.onAllRefreshables { refreshAfterGameEnd() }
     }
 
     /**
@@ -83,7 +83,7 @@ class MainService()   {
         for (player in playersList) {
             player.score = dealerService.calculatePoints(player.playerCards)
         }
-        playersList.sortedByDescending{it.score}
+        playersList.sortByDescending{it.score}
     }
 
 

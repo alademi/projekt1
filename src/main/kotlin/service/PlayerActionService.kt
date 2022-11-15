@@ -69,12 +69,13 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
      */
     fun changeAllCards() {
         val game = mainService.currentGame
-        val index = game!!.moveCount
+      //  val index = game!!.moveCount
+        val currentPlayer = mainService.dealerService.getCurrentPlayer()
         val player = mainService.dealerService.getCurrentPlayer()
         val playerCards = mainService.dealerService.getPlayerCards(player)
         val middleCards = mainService.dealerService.getMiddleCards()
         mainService.currentGame!!.middleCards = playerCards
-        mainService.currentGame!!.playerList[index].playerCards = middleCards
+        currentPlayer.playerCards = middleCards
         resetPass()
         mainService.dealerService.endOfMove()
     }
