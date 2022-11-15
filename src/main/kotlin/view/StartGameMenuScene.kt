@@ -106,7 +106,6 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
         visual = ColorVisual(136, 221, 136)
         onMouseClicked = {
             addNames()
-            println(nameList)
             mainService.startNewGame(nameList)
         }
     }

@@ -24,7 +24,6 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
         quitButton.onMouseClicked =
             {
                 exit()
-
             }
     }
 

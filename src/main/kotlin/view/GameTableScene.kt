@@ -16,6 +16,11 @@ import tools.aqua.bgw.util.Font
 
 class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080), Refreshable {
 
+    private var playerCard: Card? = null
+    private var middleCard: Card? = null
+    var playerCardFlag = false
+    var middleCardFlag = false
+
 
     private val playerName = Label(
         width = 300, height = 50,
@@ -57,9 +62,8 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         font = Font(size = 22)
     ).apply {
         onMouseClicked = {
-            mainService.playerActionService.changeSingleCard(
-                mainService.dealerService.getCurrentPlayer().playerCards[0], mainService.currentGame!!.middleCards[0]
-            )
+            swapOne()
+
         }
     }
 
@@ -168,6 +172,43 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         }
 
     }
+
+
+    private fun swapOne() {
+
+
+        currentPlayerHand.apply {
+            for (card in this) {
+                card.apply {
+                    onMouseClicked = {
+                        playerCard = cardMap.backward(card)
+                        middleCardFlag = true
+                        println(middleCardFlag)
+                    }
+                }
+
+            }
+        }
+
+
+        if (middleCardFlag)
+        middleCards.apply {
+            for (card in this)
+                card.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(card)
+                        println(playerCard)
+                        println(middleCard)
+                        checkNotNull(middleCard)
+                        checkNotNull(playerCard)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+        }
+
+
+    }
+
 
     override fun refreshAfterStartNewGame() {
         val game = mainService.currentGame
