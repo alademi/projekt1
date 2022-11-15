@@ -25,6 +25,8 @@ class MainServiceTest {
         assertEquals(game.currentGame!!.middleCards.size, 3)
         assertNotNull(game.currentGame!!.cardDeck)
         assertEquals(game.currentGame!!.cardDeck.size, 17)
+
+
         val highScore = game.exitGame()
         assertNotNull(highScore)
         val game2 = MainService()

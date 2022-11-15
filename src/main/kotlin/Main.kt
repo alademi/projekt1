@@ -1,6 +1,8 @@
 import view.SopraApplication
+import view.StartGameMenuScene
+import view.SwimApplication
 
 fun main() {
-    SopraApplication().show()
+    SwimApplication().show()
     println("Application ended. Goodbye")
 }

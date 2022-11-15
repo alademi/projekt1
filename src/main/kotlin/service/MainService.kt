@@ -8,7 +8,7 @@ import view.Refreshable
  * anderen Services-Klassen zu ermöglichen und die Daten des aktuellen Spiels zu halten
  */
 
-class MainService() : RefreshableService() {
+class MainService()   {
 
     /**
      * das aktuelle Spiel is in dem Variable currentGame gepeichert .
@@ -34,8 +34,7 @@ class MainService() : RefreshableService() {
         val moveCount = 0
         val game = World(middleCards, moveCount, passCount, playerList, cardStack!!)
         currentGame = game
-
-        onAllRefreshables { refreshAfterStartNewGame() }
+        dealerService.onAllRefreshables { refreshAfterStartNewGame() }
 
     }
 
@@ -71,15 +70,15 @@ class MainService() : RefreshableService() {
      * am Ende des Spiels wird diese Methode aufgerufen,um die Rangliste des Spiels zu ziegen .
      */
     fun exitGame() {
-        highScoreList()
-        onAllRefreshables { refreshAfterGameEnd() }
+        findWinner()
+       // onAllRefreshables { refreshAfterGameEnd() }
     }
 
     /**
      * Hilfemethode für die methode [exitGame] , um die Punkte der Spieler zu aktualisieren
      * und die Rangliste zurückzugeben
      */
-    private fun highScoreList()  {
+    private fun findWinner()  {
         val playersList = currentGame!!.playerList
         for (player in playersList) {
             player.score = dealerService.calculatePoints(player.playerCards)
@@ -92,8 +91,9 @@ class MainService() : RefreshableService() {
     /**
      * fügt allen Services, die zu MainService verbunden sind , die breitgestellten [re] hinzu
      */
-    override fun addRefreshable(re: Refreshable) {
-        this.addRefreshable(re)
+
+   fun addRefreshable(re: Refreshable) {
+        //this.addRefreshable(re)
         playerActionService.addRefreshable(re)
         dealerService.addRefreshable(re)
     }
@@ -103,5 +103,8 @@ class MainService() : RefreshableService() {
     fun addRefreshables(vararg newRefreshables: Refreshable) {
         newRefreshables.forEach { addRefreshable(it) }
     }
+
+
+
 
 }
