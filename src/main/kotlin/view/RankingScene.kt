@@ -27,8 +27,8 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
 
     private val p4score = Label(width = 300, height = 35, posX = 50, posY = 230)
 
-    private val gameResult = Label(width = 300, height = 35, posX = 50, posY = 260).apply {
-    }
+    private val gameResult = Label(width = 300, height = 35, posX = 50, posY = 260)
+
 
     val quitButton = Button(width = 140, height = 35, posX = 50, posY = 295, text = "Quit").apply {
         visual = ColorVisual(Color(221, 136, 136))
@@ -65,25 +65,26 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
 
     override fun refreshAfterGameEnd() {
         val game = mainService.currentGame
-        checkNotNull(game) {"No game running"}
+        checkNotNull(game) { "No game running" }
         p1Score.text = "${game.playerList[0].name} scored ${game.playerList[0].score}"
         p2Score.text = "${game.playerList[1].name} scored ${game.playerList[1].score}"
 
-        if(game.playerList.size == 3)
-        {
+        if (game.playerList.size == 3) {
             p3score.text = "${game.playerList[2].name} scored ${game.playerList[2].score}"
             addComponents(p3score)
         }
 
-        if(game.playerList.size == 4)
-        {
+        if (game.playerList.size == 4) {
             p3score.text = "${game.playerList[2].name} scored ${game.playerList[2].score}"
             p4score.text = "${game.playerList[3].name} scored ${game.playerList[3].score}"
             addComponents(p3score)
             addComponents(p4score)
         }
-
-        gameResult.text = "The Winner is ${game.playerList[0].name} scored ${game.playerList[0].score}"
+        if (game.playerList[0].score > game.playerList[1].score) {
+            gameResult.text = "The Winner is ${game.playerList[0].name} with ${game.playerList[0].score} points"
+        } else {
+            gameResult.text =
+                "The Winner are ${game.playerList[0].name} and ${game.playerList[0].name} ,scored ${game.playerList[0].score}"
+        }
     }
-
 }
