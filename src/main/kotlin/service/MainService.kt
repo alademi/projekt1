@@ -86,6 +86,10 @@ class MainService()   {
         playersList.sortByDescending{it.score}
     }
 
+    fun resetWorld()
+    {
+        currentGame = null
+    }
 
 
     /**

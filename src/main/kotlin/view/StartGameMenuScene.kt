@@ -7,8 +7,12 @@ import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.components.uicomponents.TextField
 import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
+import tools.aqua.bgw.visual.ImageVisual
+import java.awt.Color
+import kotlin.coroutines.coroutineContext
 
-class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 1080), Refreshable {
+class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 800, ImageVisual("StartGame_Box.png")),
+    Refreshable {
 
     var nameList = mutableListOf<String>()
     var player3: Boolean = false
@@ -16,22 +20,18 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     var addPlayerCounter = 0
 
 
-    private val headlineLabel = Label(
-        width = 300, height = 50, posX = 50, posY = 50,
-        text = "Start New Game",
-        font = Font(size = 22)
+    private val p1Label = Label(
+        width = 140, height = 35,
+        posX = 90, posY = 300,
+        visual = ImageVisual("StartGame_Button_p1.png")
     )
 
-    private val p1Label = Label(
-        width = 100, height = 35,
-        posX = 50, posY = 125,
-        text = "Player 1:"
-    )
 
     private val p1Input: TextField = TextField(
-        width = 200, height = 35,
-        posX = 150, posY = 125,
-        text = "Player1"
+        width = 180, height = 35,
+        posX = 270, posY = 300,
+        text = "Player1",
+        font = Font(fontStyle = Font.FontStyle.NORMAL, fontWeight = Font.FontWeight.BOLD)
     ).apply {
         onKeyTyped = {
             startButton.isDisabled = this.text.isBlank() || p2Input.text.isBlank()
@@ -39,15 +39,16 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     }
 
     private val p2Label = Label(
-        width = 100, height = 35,
-        posX = 50, posY = 170,
-        text = "Player 2:"
+        width = 140, height = 35,
+        posX = 90, posY = 350,
+        visual = ImageVisual("StartGame_Button_p2.png")
     )
 
     private val p2Input: TextField = TextField(
-        width = 200, height = 35,
-        posX = 150, posY = 170,
-        text = "Player2"
+        width = 180, height = 35,
+        posX = 270, posY = 350,
+        text = "Player2",
+        font = Font(fontStyle = Font.FontStyle.NORMAL, fontWeight = Font.FontWeight.BOLD)
     ).apply {
         onKeyTyped = {
             startButton.isDisabled = p1Input.text.isBlank() || this.text.isBlank()
@@ -56,15 +57,16 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
 
 
     private val p3Label = Label(
-        width = 100, height = 35,
-        posX = 50, posY = 215,
-        text = "Player 3:"
+        width = 140, height = 35,
+        posX = 90, posY = 400,
+        visual = ImageVisual("StartGame_Button_p3.png")
     )
 
     private val p3Input: TextField = TextField(
-        width = 200, height = 35,
-        posX = 150, posY = 215,
-        text = "Player3"
+        width = 180, height = 35,
+        posX = 270, posY = 400,
+        text = "Player3",
+        font = Font(fontStyle = Font.FontStyle.NORMAL, fontWeight = Font.FontWeight.BOLD)
     ).apply {
         onKeyTyped = {
             startButton.isDisabled = p1Input.text.isBlank() || this.text.isBlank()
@@ -73,15 +75,16 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     }
 
     private val p4Label = Label(
-        width = 100, height = 35,
-        posX = 50, posY = 260,
-        text = "Player 4:"
+        width = 140, height = 35,
+        posX = 90, posY = 450,
+        visual = ImageVisual("StartGame_Button_p4.png")
     )
 
     private val p4Input: TextField = TextField(
-        width = 200, height = 35,
-        posX = 150, posY = 260,
-        text = "Player4"
+        width = 180, height = 35,
+        posX = 270, posY = 450,
+        text = "Player4",
+        font = Font(fontStyle = Font.FontStyle.NORMAL, fontWeight = Font.FontWeight.BOLD)
     ).apply {
         onKeyTyped = {
             startButton.isDisabled = p1Input.text.isBlank() || this.text.isBlank()
@@ -90,20 +93,35 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
 
 
     val quitButton = Button(
-        width = 140, height = 35,
-        posX = 180, posY = 400,
-        text = "Quit"
+        width = 300, height = 50,
+        posX = 130, posY = 680,
+        text = "Quit Game",
+        font = Font(
+            fontWeight = Font.FontWeight.BOLD,
+            fontStyle = Font.FontStyle.NORMAL,
+            size = 15,
+            color = Color.white
+        ),
+        visual = ColorVisual(Color(227, 23, 54))
     ).apply {
-        visual = ColorVisual(221, 136, 136)
+
     }
 
 
     private val startButton = Button(
-        width = 140, height = 35,
-        posX = 180, posY = 360,
-        text = "Start"
+        width = 300, height = 50,
+        posX = 130, posY = 600,
+        visual = ColorVisual(Color(54, 147, 145)),
+        text = "Start Game",
+        font = Font(
+            fontWeight = Font.FontWeight.BOLD,
+            fontStyle = Font.FontStyle.NORMAL,
+            size = 15,
+            color = Color.white
+        ),
+
+
     ).apply {
-        visual = ColorVisual(136, 221, 136)
         onMouseClicked = {
             addNames()
             mainService.startNewGame(nameList)
@@ -111,25 +129,77 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
     }
 
     val addPlayerButton = Button(
-        width = 140, height = 35,
-        posX = 180, posY = 320,
-        text = "Add Player"
+        width = 50, height = 30,
+        posX = 360, posY = 220,
+        visual = ImageVisual("StartGame_Number_plus.png")
     ).apply {
-        visual = ColorVisual(136, 136, 221)
         onMouseClicked = {
             addPlayerCounter++
+            numberOfPlayers.text = "${addPlayerCounter + 2}"
             addPlayer(addPlayerCounter)
         }
     }
 
+    val removePlayerButton = Button(
+        width = 50, height = 30,
+        posX = 140, posY = 220,
+        visual = ImageVisual("StartGame_Number_minus.png")
+    ).apply {
+        onMouseClicked = {
+           if (addPlayerCounter == 1)
+           {
+             //  nameList.remove(nameList[2])
+               removeComponents(p3Label)
+               removeComponents(p3Input)
+           }
+            if (addPlayerCounter == 2)
+            {
+               // nameList.remove(nameList[3])
+                removeComponents(p4Label)
+                removeComponents(p4Input)
+            }
+
+        }
+    }
+
+    private val numberOfPlayersBox = Label(
+        width = 500,
+        height = 100,
+        posX = 40,
+        posY = 170,
+        visual = ImageVisual("StartGame_Number_Box.png")
+    )
+
+    private val numberOfPlayers = Label(
+        width = 50,
+        height = 30,
+        posX = 250,
+        posY = 220,
+        text = "${addPlayerCounter + 2}",
+        visual = ImageVisual("StartGame_Number_Int2.png"),
+        font = Font(fontStyle = Font.FontStyle.OBLIQUE, fontWeight = Font.FontWeight.BOLD)
+    )
+
+    private val playersNameBox = Label(
+        width = 500,
+        height = 300,
+        posX = 40,
+        posY = 280,
+        visual = ImageVisual("StartGame_Name_Box.png")
+    )
+
     init {
         opacity = .5
         addComponents(
-            headlineLabel,
+            numberOfPlayersBox,
+            numberOfPlayers,
+            addPlayerButton,
+            removePlayerButton,
+            playersNameBox,
             p1Label, p1Input,
             p2Label, p2Input,
-            addPlayerButton,
-            startButton, quitButton
+            startButton,
+            quitButton
         )
     }
 
@@ -183,8 +253,6 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(400, 
 
     override fun refreshAfterGameEnd() {
     }
-
-
 
 
 }

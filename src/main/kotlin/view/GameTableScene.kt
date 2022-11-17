@@ -14,8 +14,9 @@ import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.core.Alignment
 import tools.aqua.bgw.event.KeyCode
 import tools.aqua.bgw.util.Font
+import kotlin.system.exitProcess
 
-class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080), Refreshable {
+class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080  ), Refreshable {
 
 
     private var playerCard: Card? = null
@@ -24,25 +25,28 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
 
     private val playerName = Label(
-        width = 300, height = 50,
-        posX = 560, posY = 800,
+        width = 200, height = 50,
+        posX = 850, posY = 690,
         text = "Player name :",
-        font = Font(size = 22)
+        font = Font(size = 22) ,
+        visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
     private val middleCardsLabel = Label(
-        width = 300, height = 50,
-        posX = 560, posY = 300,
+        width = 200, height = 50,
+        posX = 850, posY = 190,
         text = "Middle Cards",
-        font = Font(size = 22)
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
 
     private val passButton = Button(
         width = 150, height = 50,
-        posX = 1700, posY = 700,
-        text = "Pass",
-        font = Font(size = 22)
+        posX = 1530, posY = 820,
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_Button_Pass.png")
+
     ).apply {
         onMouseClicked = {
             mainService.playerActionService.pass()
@@ -51,9 +55,10 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     private val knockButton = Button(
         width = 150, height = 50,
-        posX = 1700, posY = 760,
-        text = "Knock",
-        font = Font(size = 22)
+        posX = 1530, posY = 880,
+      // text = "Knock",
+        font = Font(size = 22) ,
+        visual = ImageVisual("GameTable_Button_Knock.png")
     ).apply {
         onMouseClicked = { mainService.playerActionService.knock() }
     }
@@ -61,36 +66,40 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private val swapButton = Button(
         width = 150, height = 50,
         posX = 1700, posY = 820,
-        text = "Swap",
-        font = Font(size = 22)
+        //text = "Swap",
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_Button_SwapOne.png")
     ).apply {
         onMouseClicked = {
-           selectPlayerCard()
+           // selectPlayerCard()
         }
     }
 
     private val swapAllButton = Button(
         width = 150, height = 50,
         posX = 1700, posY = 880,
-        text = "Swap all",
-        font = Font(size = 22)
+        //text = "Swap all",
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_Button_SwapAll.png")
     ).apply {
         onMouseClicked = { mainService.playerActionService.changeAllCards() }
     }
 
 
     private val passCounter = Label(
-        width = 300, height = 50,
+        width = 200, height = 50,
         posX = 200, posY = 800,
         text = "Pass Counter : 0",
-        font = Font(size = 22)
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
     private val hasPlayerKnocked = Label(
-        width = 300, height = 50,
-        posX = 200, posY = 840,
+        width = 200, height = 50,
+        posX = 200, posY = 860,
         text = "Knocked : No ",
-        font = Font(size = 22)
+        font = Font(size = 22),
+        visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
     private val playStack = LabeledStackView(posX = 200, posY = 500, "play stack")
@@ -105,6 +114,13 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ColorVisual(255, 255, 255, 50)
     )
 
+    private val selectPlayerCardLabel = Label(
+        width = 600, height = 50,
+        posX = 800, posY = 700,
+        text = "press L : left card , M : Middle card , R : right card",
+        font = Font(size = 22)
+    )
+
     private val middleCards = LinearLayout<CardView>(
         height = 220,
         width = 800,
@@ -113,6 +129,13 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         spacing = -50,
         alignment = Alignment.CENTER,
         visual = ColorVisual(255, 255, 255, 50)
+    )
+
+    private val selectMiddleCardLabel = Label(
+        width = 600, height = 50,
+        posX = 800, posY = 200,
+        text = "press L : left card , M : Middle card , R : right card",
+        font = Font(size = 22)
     )
 
     private val cardMap: BidirectionalMap<Card, CardView> = BidirectionalMap()
@@ -179,68 +202,74 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private fun selectPlayerCard() {
 
         val pCards = mainService.dealerService.getCurrentPlayer().playerCards
-        flag = true
 
-        if (flag) {
-            onKeyPressed = { event ->
-                when (event.keyCode) {
-                    KeyCode.R -> {
-                        playerCard = pCards[0]
-                        selectMiddleCard()
-                    }
-
-                    KeyCode.M -> {
-                        playerCard = pCards[1]
-                        selectMiddleCard()
-                    }
-
-                    KeyCode.L -> {
-                        playerCard = pCards[2]
-                        selectMiddleCard()
-                    }
-
-                    else -> {
-                        throw Exception("Error by choosing a player Card")
-                    }
+        addComponents(selectPlayerCardLabel)
+        onKeyPressed = { event ->
+            when (event.keyCode) {
+                KeyCode.R -> {
+                    playerCard = pCards[0]
+                    println(playerCard)
+                    println(flag)
                 }
 
-            }
-        }
+                KeyCode.M -> {
+                    playerCard = pCards[1]
+                    println(playerCard)
+                    println(flag)
+                }
 
+                KeyCode.L -> {
+                    playerCard = pCards[2]
+                    println(playerCard)
+                    selectMiddleCard()
+                }
+
+                else -> {
+                    throw Exception("Error by choosing a player Card")
+                }
+            }
+
+        }
     }
+
 
     private fun selectMiddleCard() {
         val mCards = mainService.dealerService.getMiddleCards()
-
-        if (flag) {
-            onKeyPressed = { event ->
-                when (event.keyCode) {
-                    KeyCode.R -> {
-                        middleCard = mCards[0]
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                        flag = false
-                    }
-
-                    KeyCode.M -> {
-                        middleCard = mCards[1]
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                        flag = false
-                    }
-
-                    KeyCode.L -> {
-                        middleCard = mCards[2]
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                        flag = false
-                    }
-
-                    else -> {
-                        throw Exception("Error by choosing a player Card")
-                    }
+        removeComponents(selectPlayerCardLabel)
+        addComponents(selectMiddleCardLabel)
+        onKeyPressed = { event ->
+            when (event.keyCode) {
+                KeyCode.R -> {
+                    middleCard = mCards[0]
+                    swapVisual()
                 }
 
+
+                KeyCode.M -> {
+                    middleCard = mCards[1]
+                    swapVisual()
+                }
+
+                KeyCode.L -> {
+                    middleCard = mCards[2]
+                    swapVisual()
+                }
+
+                else -> {
+                    throw Exception("Error by choosing a player Card")
+                }
             }
+
         }
     }
+
+    private fun swapVisual()
+    {
+
+        mainService.playerActionService.changeSingleCard(playerCard!!,middleCard!!)
+    }
+
+
 
     override fun refreshAfterStartNewGame() {
         val game = mainService.currentGame
@@ -251,7 +280,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         initializeStackView(game.cardDeck, playStack, cardImageLoader)
         initializeCardView(currentPlayer.playerCards, currentPlayerHand, cardImageLoader)
         initializeCardView(game.middleCards, middleCards, cardImageLoader)
-        playerName.text = "Player: ${game.playerList[game.moveCount].name}"
+        playerName.text = game.playerList[game.moveCount].name
 
     }
 
@@ -279,7 +308,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found" }
-        playerName.text = "Player: ${currentPlayer.name}"
+        playerName.text = currentPlayer.name
     }
 
     override fun refreshMiddleCard() {

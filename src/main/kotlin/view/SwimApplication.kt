@@ -18,7 +18,6 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
     private val rankingScene = RankingScene(mainService).apply {
         newGameButton.onMouseClicked = {
-
             this@SwimApplication.showMenuScene(startGameMenuScene)
         }
         quitButton.onMouseClicked =
