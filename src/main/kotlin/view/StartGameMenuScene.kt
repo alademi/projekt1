@@ -14,10 +14,10 @@ import kotlin.coroutines.coroutineContext
 class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 800, ImageVisual("StartGame_Box.png")),
     Refreshable {
 
-    var nameList = mutableListOf<String>()
-    var player3: Boolean = false
-    var player4: Boolean = false
-    var addPlayerCounter = 0
+    private var nameList = mutableListOf<String>()
+    private var player3: Boolean = false
+    private var player4: Boolean = false
+    private var counter = 2
 
 
     private val p1Label = Label(
@@ -121,9 +121,22 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         ),
 
 
-    ).apply {
+        ).apply {
         onMouseClicked = {
-            addNames()
+            nameList.add(p1Input.text)
+            nameList.add(p2Input.text)
+
+            if(counter ==3)
+            {
+                nameList.add(p3Input.text)
+            }
+
+            if(counter == 4)
+            {
+                nameList.add(p3Input.text)
+                nameList.add(p4Input.text)
+            }
+
             mainService.startNewGame(nameList)
         }
     }
@@ -134,9 +147,26 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         visual = ImageVisual("StartGame_Number_plus.png")
     ).apply {
         onMouseClicked = {
-            addPlayerCounter++
-            numberOfPlayers.text = "${addPlayerCounter + 2}"
-            addPlayer(addPlayerCounter)
+            if(counter < 4)
+            {
+                counter++
+            }
+
+            if (counter == 3)
+            {
+                addComponents(p3Label)
+                addComponents(p3Input)
+            }
+
+            if (counter == 4)
+            {
+                if (!components.contains(p4Label) && !components.contains(p4Input)) {
+                    addComponents(p4Label)
+                    addComponents(p4Input)
+                }
+            }
+
+            numberOfPlayers.text = "${counter}"
         }
     }
 
@@ -146,19 +176,23 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         visual = ImageVisual("StartGame_Number_minus.png")
     ).apply {
         onMouseClicked = {
-           if (addPlayerCounter == 1)
-           {
-             //  nameList.remove(nameList[2])
-               removeComponents(p3Label)
-               removeComponents(p3Input)
-           }
-            if (addPlayerCounter == 2)
+            if(counter > 2)
             {
-               // nameList.remove(nameList[3])
+                counter--
+            }
+            if (counter == 2)
+            {
+                removeComponents(p3Label)
+                removeComponents(p3Input)
+            }
+
+            if (counter == 3)
+            {
                 removeComponents(p4Label)
                 removeComponents(p4Input)
             }
 
+            numberOfPlayers.text = "${counter}"
         }
     }
 
@@ -175,7 +209,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         height = 30,
         posX = 250,
         posY = 220,
-        text = "${addPlayerCounter + 2}",
+        text = "${counter}",
         visual = ImageVisual("StartGame_Number_Int2.png"),
         font = Font(fontStyle = Font.FontStyle.OBLIQUE, fontWeight = Font.FontWeight.BOLD)
     )
@@ -221,15 +255,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
 
 
     private fun addPlayer(countPlayer: Int) {
-        if (addPlayerCounter == 1) {
-            player3 = true
-            addComponents(p3Label, p3Input)
-        }
 
-        if (addPlayerCounter == 2) {
-            player4 = true
-            addComponents(p4Label, p4Input)
-        }
     }
 
 

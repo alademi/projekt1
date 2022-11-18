@@ -10,8 +10,9 @@ import tools.aqua.bgw.visual.ColorVisual
 import tools.aqua.bgw.visual.ImageVisual
 import java.awt.Color
 
-class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ),
+class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 , ),
     Refreshable {
+
 
 
     private val headlineLabel = Label(

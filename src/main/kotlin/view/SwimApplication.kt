@@ -26,14 +26,16 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
             }
     }
 
+
     init {
         mainService.addRefreshables(
             this,
             gameScene,
             startGameMenuScene,
             rankingScene
-
         )
+
+
 
         //mainService.startNewGame(startGameMenuScene.)
         this.showGameScene(gameScene)

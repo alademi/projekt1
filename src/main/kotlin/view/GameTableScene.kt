@@ -14,31 +14,51 @@ import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.core.Alignment
 import tools.aqua.bgw.event.KeyCode
 import tools.aqua.bgw.util.Font
+import java.awt.Color
 import kotlin.system.exitProcess
 
-class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080  ), Refreshable {
+class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080 , ColorVisual.CYAN ), Refreshable {
 
 
     private var playerCard: Card? = null
     private var middleCard: Card? = null
     private var flag = false
+    private val game = mainService.currentGame
 
 
-    private val playerName = Label(
+    private val playerName1 = Label(
         width = 200, height = 50,
         posX = 850, posY = 690,
-        text = "Player name :",
         font = Font(size = 22) ,
         visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
-    private val middleCardsLabel = Label(
+    private val playerName2 = Label(
         width = 200, height = 50,
-        posX = 850, posY = 190,
-        text = "Middle Cards",
-        font = Font(size = 22),
+        posX = 850, posY = 280,
+        font = Font(size = 22) ,
         visual = ImageVisual("GameTable_P_Name_Label.png")
     )
+
+
+    private val playerName3 = Label(
+        width = 200, height = 50,
+        posX = 1250, posY = 510,
+        font = Font(size = 22) ,
+        visual = ImageVisual("GameTable_P_Name_Label.png")
+    ).apply {
+        rotation = -90.0
+    }
+
+
+    private val playerName4 = Label(
+        width = 200, height = 50,
+        posX = 400, posY = 510,
+        font = Font(size = 22) ,
+        visual = ImageVisual("GameTable_P_Name_Label.png")
+    ).apply {
+        rotation = 90.0
+    }
 
 
     private val passButton = Button(
@@ -88,31 +108,71 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     private val passCounter = Label(
         width = 200, height = 50,
-        posX = 200, posY = 800,
+        posX = 290, posY = 800,
         text = "Pass Counter : 0",
-        font = Font(size = 22),
-        visual = ImageVisual("GameTable_P_Name_Label.png")
+        font = Font(
+            fontWeight = Font.FontWeight.BOLD,
+            fontStyle = Font.FontStyle.NORMAL,
+            size = 15,
+            color = Color.white
+        ),
+        visual = ColorVisual(Color(15, 56, 103))
     )
 
     private val hasPlayerKnocked = Label(
         width = 200, height = 50,
-        posX = 200, posY = 860,
+        posX = 290, posY = 870,
         text = "Knocked : No ",
-        font = Font(size = 22),
-        visual = ImageVisual("GameTable_P_Name_Label.png")
+        font = Font(
+            fontWeight = Font.FontWeight.BOLD,
+            fontStyle = Font.FontStyle.NORMAL,
+            size = 15,
+            color = Color.white
+        ),
+        visual = ColorVisual(Color(227, 23, 54))
     )
 
-    private val playStack = LabeledStackView(posX = 200, posY = 500, "play stack")
+    private val playStack = LabeledStackView(posX = 620, posY = 400, "play stack")
 
-    private val currentPlayerHand = LinearLayout<CardView>(
+    private val currentPlayerHand1 = LinearLayout<CardView>(
         height = 220,
-        width = 800,
-        posX = 560,
+        width = 500,
+        posX = 720,
         posY = 750,
         spacing = -50,
         alignment = Alignment.CENTER,
         visual = ColorVisual(255, 255, 255, 50)
     )
+
+    private val currentPlayerHand2 = LinearLayout<CardView>(
+        height = 220,
+        width = 500,
+        posX = 720,
+        posY = 50,
+        spacing = -50,
+        alignment = Alignment.CENTER,
+        visual = ColorVisual(255, 255, 255, 50)
+    )
+
+    private val currentPlayerHand3 = LinearLayout<CardView>(
+        height = 220,
+        width = 500,
+        posX = 1250,
+        posY = 400,
+        spacing = -50,
+        alignment = Alignment.CENTER,
+        visual = ColorVisual(255, 255, 255, 50)
+    ).apply { rotation = -90.0 }
+
+    private val currentPlayerHand4 = LinearLayout<CardView>(
+        height = 220,
+        width = 500,
+        posX = 100,
+        posY = 400,
+        spacing = -50,
+        alignment = Alignment.CENTER,
+        visual = ColorVisual(255, 255, 255, 50)
+    ).apply { rotation = 90.0 }
 
     private val selectPlayerCardLabel = Label(
         width = 600, height = 50,
@@ -122,12 +182,12 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     )
 
     private val middleCards = LinearLayout<CardView>(
-        height = 220,
-        width = 800,
-        posX = 560,
-        posY = 250,
+        height = 200,
+        width = 295,
+        posX = 800,
+        posY = 400,
         spacing = -50,
-        alignment = Alignment.CENTER,
+       // alignment = Alignment.CENTER,
         visual = ColorVisual(255, 255, 255, 50)
     )
 
@@ -141,11 +201,12 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private val cardMap: BidirectionalMap<Card, CardView> = BidirectionalMap()
 
     init {
-        background = ColorVisual(108, 168, 59)
+
+        background = ImageVisual("StartGame_Bg.png")
 
         addComponents(
             playStack,
-            currentPlayerHand,
+            currentPlayerHand1,
             passCounter,
             hasPlayerKnocked,
             passButton,
@@ -153,8 +214,9 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
             swapButton,
             swapAllButton,
             middleCards,
-            playerName,
-            middleCardsLabel
+            playerName1,
+            playerName2,
+            currentPlayerHand2,
         )
     }
 
@@ -191,7 +253,9 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
                 front = ImageVisual(cardImageLoader.frontImageFor(card.symbol, card.number)),
                 back = ImageVisual(cardImageLoader.backImage)
             )
-            cardView.showFront()
+            if(Cards == mainService.dealerService.getCurrentPlayer().playerCards || Cards == mainService.dealerService.getMiddleCards()) {
+                cardView.showFront()
+            }
             view.add(cardView)
             cardMap.add(card to cardView)
         }
@@ -272,15 +336,39 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
 
     override fun refreshAfterStartNewGame() {
-        val game = mainService.currentGame
+       val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found." }
         cardMap.clear()
         val cardImageLoader = CardImageLoader()
         initializeStackView(game.cardDeck, playStack, cardImageLoader)
-        initializeCardView(currentPlayer.playerCards, currentPlayerHand, cardImageLoader)
+        initializeCardView(currentPlayer.playerCards, currentPlayerHand1, cardImageLoader)
         initializeCardView(game.middleCards, middleCards, cardImageLoader)
-        playerName.text = game.playerList[game.moveCount].name
+        initializeCardView(game.playerList[1].playerCards, currentPlayerHand2, cardImageLoader)
+        playerName1.text = game.playerList[0].name
+        playerName2.text = game.playerList[1].name
+
+        if(game.playerList.size == 3)
+        {
+            addComponents(currentPlayerHand3)
+            addComponents(playerName3)
+            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+            playerName3.text = game.playerList[2].name
+        }
+
+        if(game.playerList.size == 4)
+        {
+            addComponents(currentPlayerHand3)
+            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+            addComponents(playerName3)
+            addComponents(currentPlayerHand4)
+            initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
+            addComponents(playerName4)
+            playerName3.text = game.playerList[2].name
+            playerName4.text = game.playerList[3].name
+
+        }
+
 
     }
 
@@ -301,14 +389,25 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
-        initializeCardView(currentPlayer.playerCards, currentPlayerHand, cardImageLoader)
+        initializeCardView(game.playerList[0].playerCards, currentPlayerHand1, cardImageLoader)
+        initializeCardView(game.playerList[1].playerCards, currentPlayerHand2, cardImageLoader)
+
+        if (game.playerList.size ==3)
+        {
+            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+        }
+        if (game.playerList.size ==4)
+        {
+            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+            initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
+        }
     }
 
     override fun refreshPlayerLabel() {
         val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found" }
-        playerName.text = currentPlayer.name
+       // playerName.text = currentPlayer.name
     }
 
     override fun refreshMiddleCard() {
