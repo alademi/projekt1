@@ -29,7 +29,6 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ,
 
     private val p4score = Label(width = 300, height = 35, posX = 50, posY = 230)
 
-    private val gameResult = Label(width = 300, height = 35, posX = 50, posY = 260)
 
 
     val quitButton = Button(width = 140, height = 35, posX = 50, posY = 295, text = "Quit").apply {
@@ -38,11 +37,12 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ,
 
     val newGameButton = Button(width = 140, height = 35, posX = 210, posY = 295, text = "New Game").apply {
         visual = ColorVisual(Color(136, 221, 136))
+
     }
 
     init {
         opacity = .5
-        addComponents(headlineLabel, p1Score, p2Score, gameResult, newGameButton, quitButton)
+        addComponents(headlineLabel, p1Score, p2Score,  newGameButton, quitButton)
     }
 
     override fun refreshAfterStartNewGame() {
@@ -82,11 +82,8 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ,
             addComponents(p3score)
             addComponents(p4score)
         }
-        if (game.playerList[0].score > game.playerList[1].score) {
-            gameResult.text = "The Winner is ${game.playerList[0].name} with ${game.playerList[0].score} points"
-        } else {
-            gameResult.text =
-                "The Winner are ${game.playerList[0].name} and ${game.playerList[0].name} ,scored ${game.playerList[0].score}"
-        }
+
     }
+
+
 }

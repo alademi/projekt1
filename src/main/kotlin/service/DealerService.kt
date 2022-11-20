@@ -12,6 +12,7 @@ import kotlin.math.max
 
 class DealerService(private val mainService: MainService) : RefreshableService() {
 
+
     /**
      * eine Methode zur Berechnung der Punkte der 3 Karten
      * @param playerCards die 3 Karten der Spieler
@@ -98,7 +99,9 @@ class DealerService(private val mainService: MainService) : RefreshableService()
      */
 
     fun endOfMove() {
+
         val game = mainService.currentGame
+
         if (!gameEnd()) {
             if (game!!.passCount == game.playerList.size) {
                 game.middleCards = game.cardDeck.draw(3)
@@ -128,22 +131,22 @@ class DealerService(private val mainService: MainService) : RefreshableService()
     fun getCurrentPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        val size  = game.playerList.size
-        return game.playerList[index%size]
+        val size = game.playerList.size
+        return game.playerList[index % size]
     }
 
     fun getPreviousPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        val size  = game.playerList.size
-        return game.playerList[(index - 1)%size]
+        val size = game.playerList.size
+        return game.playerList[(index - 1) % size]
     }
 
     fun getNextPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
-        val size  = game.playerList.size
-        return game.playerList[(index + 1)%size]
+        val size = game.playerList.size
+        return game.playerList[(index + 1) % size]
     }
 
     fun showNextPlayer() {

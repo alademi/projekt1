@@ -9,14 +9,12 @@ import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
 import tools.aqua.bgw.visual.ImageVisual
 import java.awt.Color
-import kotlin.coroutines.coroutineContext
+
 
 class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 800, ImageVisual("StartGame_Box.png")),
     Refreshable {
 
-    private var nameList = mutableListOf<String>()
-    private var player3: Boolean = false
-    private var player4: Boolean = false
+    var nameList = mutableListOf<String>()
     private var counter = 2
 
 
@@ -238,25 +236,10 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
     }
 
 
-    private fun addNames() {
-        this.nameList.add(p1Input.text)
-        this.nameList.add(p2Input.text)
-
-        if (player3) {
-            this.nameList.add(p3Input.text)
-        }
-
-        if (player4) {
-            this.nameList.add(p4Input.text)
-        }
 
 
-    }
 
 
-    private fun addPlayer(countPlayer: Int) {
-
-    }
 
 
     override fun refreshAfterStartNewGame() {
@@ -279,6 +262,8 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
 
     override fun refreshAfterGameEnd() {
     }
+
+
 
 
 }

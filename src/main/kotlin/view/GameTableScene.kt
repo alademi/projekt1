@@ -17,7 +17,7 @@ import tools.aqua.bgw.util.Font
 import java.awt.Color
 import kotlin.system.exitProcess
 
-class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080 , ColorVisual.CYAN ), Refreshable {
+class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080, ColorVisual.CYAN), Refreshable {
 
 
     private var playerCard: Card? = null
@@ -29,14 +29,14 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private val playerName1 = Label(
         width = 200, height = 50,
         posX = 850, posY = 690,
-        font = Font(size = 22) ,
+        font = Font(size = 22),
         visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
     private val playerName2 = Label(
         width = 200, height = 50,
         posX = 850, posY = 280,
-        font = Font(size = 22) ,
+        font = Font(size = 22),
         visual = ImageVisual("GameTable_P_Name_Label.png")
     )
 
@@ -44,20 +44,20 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private val playerName3 = Label(
         width = 200, height = 50,
         posX = 1250, posY = 510,
-        font = Font(size = 22) ,
+        font = Font(size = 22),
         visual = ImageVisual("GameTable_P_Name_Label.png")
     ).apply {
-        rotation = -90.0
+        rotation = 90.0
     }
 
 
     private val playerName4 = Label(
         width = 200, height = 50,
         posX = 400, posY = 510,
-        font = Font(size = 22) ,
+        font = Font(size = 22),
         visual = ImageVisual("GameTable_P_Name_Label.png")
     ).apply {
-        rotation = 90.0
+        rotation = -90.0
     }
 
 
@@ -76,8 +76,8 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     private val knockButton = Button(
         width = 150, height = 50,
         posX = 1530, posY = 880,
-      // text = "Knock",
-        font = Font(size = 22) ,
+        // text = "Knock",
+        font = Font(size = 22),
         visual = ImageVisual("GameTable_Button_Knock.png")
     ).apply {
         onMouseClicked = { mainService.playerActionService.knock() }
@@ -91,7 +91,8 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ImageVisual("GameTable_Button_SwapOne.png")
     ).apply {
         onMouseClicked = {
-           // selectPlayerCard()
+            //  selectPlayerCard()
+            swapVisual()
         }
     }
 
@@ -187,7 +188,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         posX = 800,
         posY = 400,
         spacing = -50,
-       // alignment = Alignment.CENTER,
+        // alignment = Alignment.CENTER,
         visual = ColorVisual(255, 255, 255, 50)
     )
 
@@ -199,6 +200,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     )
 
     private val cardMap: BidirectionalMap<Card, CardView> = BidirectionalMap()
+
 
     init {
 
@@ -253,13 +255,29 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
                 front = ImageVisual(cardImageLoader.frontImageFor(card.symbol, card.number)),
                 back = ImageVisual(cardImageLoader.backImage)
             )
-            if(Cards == mainService.dealerService.getCurrentPlayer().playerCards || Cards == mainService.dealerService.getMiddleCards()) {
+            if (Cards == mainService.dealerService.getCurrentPlayer().playerCards || Cards == mainService.dealerService.getMiddleCards()) {
                 cardView.showFront()
             }
             view.add(cardView)
             cardMap.add(card to cardView)
         }
 
+    }
+
+    private fun moveCardView(
+        cardView: CardView,
+        linearView: LinearLayout<CardView>,
+        flip: Boolean = false
+    ) {
+        if (flip) {
+            when (cardView.currentSide) {
+                CardView.CardSide.BACK -> cardView.showFront()
+                CardView.CardSide.FRONT -> cardView.showBack()
+            }
+        }
+
+        cardView.removeFromParent()
+        linearView.add(cardView)
     }
 
 
@@ -327,16 +345,103 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         }
     }
 
-    private fun swapVisual()
-    {
 
-        mainService.playerActionService.changeSingleCard(playerCard!!,middleCard!!)
+    private fun swapVisual() {
+
+
+        val pCards = mainService.dealerService.getCurrentPlayer().playerCards
+        val pView1 = cardMap.forward(pCards[0])
+        val pView2 = cardMap.forward(pCards[1])
+        val pView3 = cardMap.forward(pCards[2])
+        val mCards = mainService.dealerService.getMiddleCards()
+        println(mCards)
+        val mView2 = cardMap.forward(mCards[1])
+        val mView3 = cardMap.forward(mCards[2])
+        val mView1 = cardMap.forward(mCards[0])
+
+
+
+        pView1.apply {
+            onMouseClicked = {
+                playerCard = cardMap.backward(pView1)
+                mView1.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView1)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView2.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView2)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView3.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView3)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+
+            }
+        }
+        pView2.apply {
+            onMouseClicked = {
+                playerCard = cardMap.backward(pView2)
+                mView1.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView1)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView2.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView2)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView3.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView3)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+
+            }
+        }
+
+        pView3.apply {
+            onMouseClicked = {
+                playerCard = cardMap.backward(pView3)
+                mView1.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView1)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView2.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView2)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+                mView3.apply {
+                    onMouseClicked = {
+                        middleCard = cardMap.backward(mView3)
+                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
+                    }
+                }
+
+            }
+        }
+
+
     }
 
 
 
     override fun refreshAfterStartNewGame() {
-       val game = mainService.currentGame
+        val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found." }
         cardMap.clear()
@@ -348,16 +453,14 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         playerName1.text = game.playerList[0].name
         playerName2.text = game.playerList[1].name
 
-        if(game.playerList.size == 3)
-        {
+        if (game.playerList.size == 3) {
             addComponents(currentPlayerHand3)
             addComponents(playerName3)
             initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
             playerName3.text = game.playerList[2].name
         }
 
-        if(game.playerList.size == 4)
-        {
+        if (game.playerList.size == 4) {
             addComponents(currentPlayerHand3)
             initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
             addComponents(playerName3)
@@ -384,43 +487,52 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     }
 
+
+
     override fun refreshHandCards() {
         val game = mainService.currentGame
-        val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found" }
-        val cardImageLoader = CardImageLoader()
-        initializeCardView(game.playerList[0].playerCards, currentPlayerHand1, cardImageLoader)
-        initializeCardView(game.playerList[1].playerCards, currentPlayerHand2, cardImageLoader)
 
-        if (game.playerList.size ==3)
-        {
-            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
-        }
-        if (game.playerList.size ==4)
-        {
-            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
-            initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
-        }
+        val cardImageLoader = CardImageLoader()
+
+
+
+    initializeCardView(game.playerList[0].playerCards, currentPlayerHand1, cardImageLoader)
+
+    initializeCardView(game.playerList[1].playerCards, currentPlayerHand2, cardImageLoader)
+
+
+    if (game.playerList.size == 3) {
+        initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
     }
+    if (game.playerList.size == 4) {
+        initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+        initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
+    }
+
+    }
+
 
     override fun refreshPlayerLabel() {
         val game = mainService.currentGame
-        val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found" }
-       // playerName.text = currentPlayer.name
     }
 
     override fun refreshMiddleCard() {
+        cardMap.clear()
         val game = mainService.currentGame
         checkNotNull(game) { "No started game found" }
         val cardImageLoader = CardImageLoader()
         initializeCardView(game.middleCards, middleCards, cardImageLoader)
+
     }
 
 
     override fun refreshAfterGameEnd() {
 
     }
+
+
 
 
 }

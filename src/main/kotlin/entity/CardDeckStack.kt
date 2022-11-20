@@ -48,6 +48,8 @@ class CardDeckStack(private val random: Random = Random) {
         return MutableList(amount) { cards.removeFirst() }
     }
 
+    fun peek() : Card = cards.first()
+
     fun peekAll(): List<Card> = cards.toList()
 
 
