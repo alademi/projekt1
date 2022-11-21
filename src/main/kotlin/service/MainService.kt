@@ -8,7 +8,7 @@ import view.Refreshable
  * anderen Services-Klassen zu ermöglichen und die Daten des aktuellen Spiels zu halten
  */
 
-class MainService()   {
+class MainService {
 
     /**
      * das aktuelle Spiel is in dem Variable currentGame gepeichert .
@@ -86,10 +86,6 @@ class MainService()   {
         playersList.sortByDescending{it.score}
     }
 
-    fun resetWorld()
-    {
-        currentGame = null
-    }
 
 
     /**

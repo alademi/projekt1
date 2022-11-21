@@ -72,8 +72,6 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
         {
             startGameMenuScene.nameList.remove(player.name)
         }
-        println(startGameMenuScene.nameList)
-
 
 
     }

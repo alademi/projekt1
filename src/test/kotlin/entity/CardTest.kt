@@ -14,7 +14,7 @@ import kotlin.test.assertNotEquals
 class CardTest {
 
     /**
-     * Hier werden einige Karten instanziiert , um den Test durchzuführen
+     * Hier werden einige Karten instanziiert, um den Test durchzuführen
      */
 
     private val card1 = Card( CardValue.ACE,  CardSuit.CLUBS)

@@ -68,8 +68,6 @@ class PlayerActionService(private var mainService: MainService) : RefreshableSer
      * Dabei werden alle Karten der Spieler mit den 3 mittleren Karten ausgetauscht
      */
     fun changeAllCards() {
-        val game = mainService.currentGame
-      //  val index = game!!.moveCount
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         val player = mainService.dealerService.getCurrentPlayer()
         val playerCards = mainService.dealerService.getPlayerCards(player)

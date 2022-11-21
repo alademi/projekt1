@@ -1,7 +1,6 @@
 package service
 
-import service.*
-import entity.*
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

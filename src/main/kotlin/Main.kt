@@ -1,5 +1,3 @@
-import view.SopraApplication
-import view.StartGameMenuScene
 import view.SwimApplication
 
 fun main() {

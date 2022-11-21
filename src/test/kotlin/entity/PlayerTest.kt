@@ -23,9 +23,9 @@ class PlayerTest {
     private val card4 = Card( CardValue.JACK,  CardSuit.HEARTS)
     private val card5 = Card( CardValue.TWO,  CardSuit.DIAMONDS)
 
-    private val listCards1 = mutableListOf<Card>(card1, card2, card3)
-    private val listCards2 = mutableListOf<Card>(card1, card3, card5)
-    private val listCards3 = mutableListOf<Card>(card1, card2, card4)
+    private val listCards1 = mutableListOf(card1, card2, card3)
+    private val listCards2 = mutableListOf(card1, card3, card5)
+    private val listCards3 = mutableListOf(card1, card2, card4)
 
 
     private val player1 = Player("Abdul", 20.0, listCards1,false)

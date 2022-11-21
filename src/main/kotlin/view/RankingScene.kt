@@ -1,18 +1,15 @@
 package view
 
 import service.MainService
-import entity.Player
 import tools.aqua.bgw.core.MenuScene
 import tools.aqua.bgw.components.uicomponents.Button
 import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
-import tools.aqua.bgw.visual.ImageVisual
 import java.awt.Color
 
-class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 , ),
+class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
     Refreshable {
-
 
 
     private val headlineLabel = Label(
@@ -30,7 +27,6 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ,
     private val p4score = Label(width = 300, height = 35, posX = 50, posY = 230)
 
 
-
     val quitButton = Button(width = 140, height = 35, posX = 50, posY = 295, text = "Quit").apply {
         visual = ColorVisual(Color(221, 136, 136))
     }
@@ -42,7 +38,7 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080 ,
 
     init {
         opacity = .5
-        addComponents(headlineLabel, p1Score, p2Score,  newGameButton, quitButton)
+        addComponents(headlineLabel, p1Score, p2Score, newGameButton, quitButton)
     }
 
     override fun refreshAfterStartNewGame() {

@@ -121,6 +121,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
 
         ).apply {
         onMouseClicked = {
+            println(nameList)
             nameList.add(p1Input.text)
             nameList.add(p2Input.text)
 
@@ -139,7 +140,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         }
     }
 
-    val addPlayerButton = Button(
+    private val addPlayerButton = Button(
         width = 50, height = 30,
         posX = 360, posY = 220,
         visual = ImageVisual("StartGame_Number_plus.png")
@@ -164,11 +165,11 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
                 }
             }
 
-            numberOfPlayers.text = "${counter}"
+            numberOfPlayers.text = "$counter"
         }
     }
 
-    val removePlayerButton = Button(
+    private val removePlayerButton = Button(
         width = 50, height = 30,
         posX = 140, posY = 220,
         visual = ImageVisual("StartGame_Number_minus.png")
@@ -190,7 +191,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
                 removeComponents(p4Input)
             }
 
-            numberOfPlayers.text = "${counter}"
+            numberOfPlayers.text = "$counter"
         }
     }
 
@@ -207,7 +208,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         height = 30,
         posX = 250,
         posY = 220,
-        text = "${counter}",
+        text = "$counter",
         visual = ImageVisual("StartGame_Number_Int2.png"),
         font = Font(fontStyle = Font.FontStyle.OBLIQUE, fontWeight = Font.FontWeight.BOLD)
     )

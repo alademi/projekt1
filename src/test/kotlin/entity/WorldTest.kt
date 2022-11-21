@@ -5,12 +5,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 /**
- * Testfälle für die Klasse [Welt]
+ * Testfälle für die Klasse [World]
  */
 class WorldTest {
 /*
 
-     * Hier werden einige Welten instanziiert , um den Test durchzuführen
+     * Hier werden einige Welten instanziiert, um den Test durchzuführen
      */
 
     private val card1 = Card( CardValue.ACE,  CardSuit.CLUBS)
