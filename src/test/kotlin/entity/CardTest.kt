@@ -25,6 +25,11 @@ class CardTest {
     private val card6 = Card( CardValue.TWO,  CardSuit.DIAMONDS)
     private val card7 = Card( CardValue.JACK,  CardSuit.DIAMONDS)
     private val card8 = Card( CardValue.ACE, CardSuit.SPADES)
+    private val card9 = Card( CardValue.THREE,  CardSuit.DIAMONDS)
+    private val card10 = Card( CardValue.FOUR,  CardSuit.DIAMONDS)
+    private val card11 = Card( CardValue.FIVE,  CardSuit.DIAMONDS)
+    private val card12 = Card( CardValue.SIX, CardSuit.SPADES)
+    private val card13 = Card( CardValue.SEVEN, CardSuit.SPADES)
 
 
     /**
@@ -48,6 +53,11 @@ class CardTest {
         assertEquals(card2.symbol.toString(),CardSuit.DIAMONDS.toString())
         assertEquals(card3.symbol.toString(),CardSuit.SPADES.toString())
         assertEquals(card4.symbol.toString(),CardSuit.HEARTS.toString())
+        assertEquals(card10.number.toString(),CardValue.FOUR.toString())
+        assertEquals(card9.number.toString(),CardValue.THREE.toString())
+        assertEquals(card11.number.toString(),CardValue.FIVE.toString())
+        assertEquals(card12.number.toString(),CardValue.SIX.toString())
+        assertEquals(card13.number.toString(),CardValue.SEVEN.toString())
 
 
     }
