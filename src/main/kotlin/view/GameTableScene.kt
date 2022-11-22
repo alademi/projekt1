@@ -16,6 +16,14 @@ import tools.aqua.bgw.util.Font
 import java.awt.Color
 
 
+/**
+ *  Die Klasse repräsentiert den Spieltisch, der aus den Karten der spieler [currentPlayerHand1] [currentPlayerHand2]
+ *  [currentPlayerHand3] [currentPlayerHand3], mittleren Karten [middleCards] und CardDeck [playStack] besteht.
+ *  Die möglichen Aktionen der Spieler können dür die Buttons [passButton] [knockButton] [swapButton] [swapAllButton]
+ *  durchgeführt werden.
+ *
+ */
+
 class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080, ColorVisual.CYAN), Refreshable {
 
 
@@ -205,7 +213,12 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         )
     }
 
-
+    /**
+     * diese Methode ist dafür zuständig, ein StackView für [playStack] zu initialisieren.
+     * @param stack die Karten auf dem Kartenstapel
+     * @param stackView das View des Kartenstapels
+     * @param cardImageLoader
+     */
     private fun initializeStackView(
         stack: CardDeckStack,
         stackView: LabeledStackView,
@@ -225,6 +238,13 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         }
     }
 
+    /**
+     * diese Methode ist dafür zuständig, ein linearView für die Karten der Spieler und die mittleren Karten
+     * zu initialisieren.
+     * @param cards die Karten der Spieler/mittleren Karten
+     * @param view das View der Karten z.B [currentPlayerHand1] , [middleCards]
+     * @param cardImageLoader
+     */
     private fun initializeCardView(
         cards: MutableList<Card>,
         view: LinearLayout<CardView>,
@@ -238,10 +258,11 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
                 front = ImageVisual(cardImageLoader.frontImageFor(card.symbol, card.number)),
                 back = ImageVisual(cardImageLoader.backImage)
             )
+
             val check1 = (cards == mainService.dealerService.getCurrentPlayer().playerCards)
             val check2 = (cards == mainService.dealerService.getMiddleCards())
             if (check1 || check2){
-                cardView.showFront()
+                cardView.showFront() //zeige die vordere Seite der Karte
             }
 
             view.add(cardView)

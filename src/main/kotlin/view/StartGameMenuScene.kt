@@ -10,6 +10,12 @@ import tools.aqua.bgw.visual.ColorVisual
 import tools.aqua.bgw.visual.ImageVisual
 import java.awt.Color
 
+/**
+ * [StartGameMenuScene] fürs Starten ein neues Spiel. Das wird direkt angezeigt, wenn man [SwimApplication] startet
+ * oder Beim anklickén von "new game" in [RankingScene]. Man muss erstmal die Spieler konfigurieren
+ * (Anzahl der Spieler bestimmen, Namen eingeben ) und dann [startButton] klicken, um das spiel zu starten.
+ * Mit [quitButton] kann man das Spiel schließen.
+ */
 
 class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 800, ImageVisual("StartGame_Box.png")),
     Refreshable {

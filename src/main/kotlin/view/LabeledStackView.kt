@@ -8,6 +8,12 @@ import tools.aqua.bgw.visual.CompoundVisual
 import tools.aqua.bgw.visual.TextVisual
 import java.awt.Color
 
+
+/**
+ * Diese Klasse basiert hauptsächlich auf das [Beispiel-War]
+ */
+
+
 /**
  * Custom [CardStack] for [CardView]s with a fixed width of 130px and a fixed height of 200px.
  * It is used for all game stacks on the table.
