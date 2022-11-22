@@ -6,7 +6,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-
+/**
+ *  Diese Klasse ist fürs Testen von [MainService]
+ */
 class MainServiceTest {
 
     val playerlist = listOf<String>("Aziz", "Ahmed", "Ali", "Sam")
@@ -34,6 +36,8 @@ class MainServiceTest {
         assertTrue(game2.currentGame!!.playerList[0].score >= game2.currentGame!!.playerList[1].score)
         assertTrue(game2.currentGame!!.playerList[1].score >= game2.currentGame!!.playerList[2].score)
         assertTrue(game2.currentGame!!.playerList[2].score >= game2.currentGame!!.playerList[3].score)
+
+
 
     }
 

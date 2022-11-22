@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test
 import kotlin.test.*
 
 
+/**
+ *  Diese Klasse ist fürs Testen von [MainService]
+ */
+
 class PlayerActionTest {
     private val playerList = listOf("Aziz", "Ahmed", "Ali", "Sam")
 

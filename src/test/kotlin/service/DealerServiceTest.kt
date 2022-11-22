@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+/**
+ *  Diese Klasse ist fürs Testen von [DealerService]
+ */
 class DealerServiceTest {
     private val card1 = Card( CardValue.ACE,  CardSuit.CLUBS)
     private val card2 = Card(CardValue.NINE,  CardSuit.CLUBS)
