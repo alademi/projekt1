@@ -44,6 +44,10 @@ class CardTest {
         assertEquals(card1.number.toString(),CardValue.ACE.toString())
         assertEquals(card3.number.toString(),CardValue.QUEEN.toString())
         assertEquals(card4.number.toString(),CardValue.JACK.toString())
+        assertEquals(card5.number.toString(),CardValue.TWO.toString())
+        assertEquals(card2.symbol.toString(),CardSuit.DIAMONDS.toString())
+        assertEquals(card3.symbol.toString(),CardSuit.SPADES.toString())
+        assertEquals(card4.symbol.toString(),CardSuit.HEARTS.toString())
 
 
     }
