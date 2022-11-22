@@ -77,16 +77,26 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         return points
     }
 
+    /**
+     * Diese Methode gibt die mittleren Karten des aktuellen Spiels zurück
+     */
     fun getMiddleCards(): MutableList<Card> {
         val game = mainService.currentGame
         return game!!.middleCards
     }
 
+    /**
+     * Diese Methode gibt die CardDeck des aktuellen Spiels zurück
+     */
     fun getDeck(): CardDeckStack {
         val game = mainService.currentGame
         return game!!.cardDeck
     }
 
+    /**
+     * Diese Methode gibt die Karten eines bestimmten Spielers zurück
+     * @param player der Spieler, dessen Karten wir suchen.
+     */
     fun getPlayerCards(player: Player): MutableList<Card> {
         return player.playerCards
     }
@@ -110,13 +120,15 @@ class DealerService(private val mainService: MainService) : RefreshableService()
             game.moveCount++
             onAllRefreshables { refreshMiddleCard() }
             onAllRefreshables { refreshAfterMove() }
-            showNextPlayer()
+            onAllRefreshables { refreshHandCards() }
         } else {
             mainService.exitGame()
         }
     }
 
-
+    /**
+     *  HilfsMethode, um zu überprüfen, ob das Spiel beendet werden muss.
+     */
     private fun gameEnd(): Boolean {
         val game = mainService.currentGame
         if (game!!.passCount == game.playerList.size && game.cardDeck.size <= 2) {
@@ -128,6 +140,9 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         return false
     }
 
+    /**
+     *  Diese Methode gibt den aktuellen Spieler zurück
+     */
     fun getCurrentPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
@@ -135,6 +150,10 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         return game.playerList[index % size]
     }
 
+
+    /**
+     *  Diese Methode gibt den vorherigen Spieler zurück
+     */
     fun getPreviousPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
@@ -142,15 +161,14 @@ class DealerService(private val mainService: MainService) : RefreshableService()
         return game.playerList[(index - 1) % size]
     }
 
+    /**
+     *  Diese Methode gibt den nächsten Spieler zurück
+     */
     fun getNextPlayer(): Player {
         val game = mainService.currentGame
         val index = game!!.moveCount
         val size = game.playerList.size
         return game.playerList[(index + 1) % size]
-    }
-
-    fun showNextPlayer() {
-        onAllRefreshables { refreshHandCards() }
     }
 
 

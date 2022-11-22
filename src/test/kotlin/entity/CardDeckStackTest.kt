@@ -3,7 +3,9 @@ package entity
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 
-
+/**
+ *  Die Klasse ist fürs Testen von [CardDeckStack] zuständig
+ */
 internal class CardDeckStackTest {
 
     private val cardDeck = CardDeckStack()

@@ -9,8 +9,13 @@ import kotlin.test.*
  */
 
 class PlayerActionTest {
+    //intializiere eine Liste von Namen , um das Spiel zu starten
     private val playerList = listOf("Aziz", "Ahmed", "Ali", "Sam")
 
+
+    /**
+     * testet die methode SwapOne in [PlayerActionService]
+     */
     @Test
     fun testSwapOne() {
         val game = MainService()
@@ -29,6 +34,10 @@ class PlayerActionTest {
         assertEquals(middleCards[2], pCard)
         assertEquals(playerCards[2], mCard)
     }
+
+    /**
+     * testet die methode SwapAll in [PlayerActionService]
+     */
     @Test
     fun testSwapAll() {
          val game = MainService()
@@ -41,6 +50,9 @@ class PlayerActionTest {
         assertEquals(player.playerCards, middleCards)
     }
 
+    /**
+     * testet die methode Knock in [PlayerActionService]
+     */
     @Test
     fun testKnock()
     {
@@ -54,6 +66,9 @@ class PlayerActionTest {
 
     }
 
+    /**
+     * testet die methode Pass in [PlayerActionService]
+     */
     @Test
     fun testPass()
     {
