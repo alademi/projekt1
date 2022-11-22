@@ -39,6 +39,8 @@ class CardTest {
         assertNotEquals(card3,card8)
         assertNotEquals(card7,card4)
         assertEquals(card5,card6)
+        assertEquals(card2.number.toString(),CardValue.EIGHT.toString())
+        assertEquals(card1.symbol.toString(),CardSuit.CLUBS.toString())
 
     }
 }

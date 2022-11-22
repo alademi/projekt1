@@ -339,6 +339,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     }
 
 
+
     override fun refreshAfterStartNewGame() {
         val game = mainService.currentGame
         val currentPlayer = mainService.dealerService.getCurrentPlayer()

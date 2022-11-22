@@ -41,6 +41,7 @@ class MainServiceTest {
         assertTrue(game2.currentGame!!.playerList[0].score >= game2.currentGame!!.playerList[1].score)
         assertTrue(game2.currentGame!!.playerList[1].score >= game2.currentGame!!.playerList[2].score)
         assertTrue(game2.currentGame!!.playerList[2].score >= game2.currentGame!!.playerList[3].score)
+        assertNotNull(game.cardStack)
 
 
 

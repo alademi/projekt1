@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+
 /**
  *  Diese Klasse ist fürs Testen von [DealerService]
  */
@@ -64,6 +65,12 @@ class DealerServiceTest {
         assertNotNull(currentPlayer)
         val nextPlayer = game.dealerService.getNextPlayer()
         assertNotNull((nextPlayer))
+        val game2 = MainService()
+        game2.startNewGame(playerlist)
+        checkNotNull(game2)
+        game2.currentGame!!.passCount = 4
+        game2.cardStack!!.draw(17)
+
 
 
     }
