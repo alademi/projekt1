@@ -47,6 +47,7 @@ class WorldTest {
     {
         assertEquals(world1,world2)
         assertNotEquals(world1,world3)
+        checkNotNull(world1.cardDeck)
     }
 
 

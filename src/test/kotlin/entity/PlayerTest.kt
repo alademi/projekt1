@@ -49,6 +49,7 @@ class PlayerTest {
         assertEquals(player1.name,player2.name)
         assertEquals(player1.score,player4.score)
         assertEquals(player1.playerCards,player5.playerCards)
+        assertEquals(player1.hasPlayerKnocked,false)
 
     }
 }
