@@ -125,13 +125,11 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
             nameList.add(p1Input.text)
             nameList.add(p2Input.text)
 
-            if(counter ==3)
-            {
+            if (counter == 3) {
                 nameList.add(p3Input.text)
             }
 
-            if(counter == 4)
-            {
+            if (counter == 4) {
                 nameList.add(p3Input.text)
                 nameList.add(p4Input.text)
             }
@@ -146,19 +144,16 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         visual = ImageVisual("StartGame_Number_plus.png")
     ).apply {
         onMouseClicked = {
-            if(counter < 4)
-            {
+            if (counter < 4) {
                 counter++
             }
 
-            if (counter == 3)
-            {
+            if (counter == 3) {
                 addComponents(p3Label)
                 addComponents(p3Input)
             }
 
-            if (counter == 4)
-            {
+            if (counter == 4) {
                 if (!components.contains(p4Label) && !components.contains(p4Input)) {
                     addComponents(p4Label)
                     addComponents(p4Input)
@@ -175,18 +170,15 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
         visual = ImageVisual("StartGame_Number_minus.png")
     ).apply {
         onMouseClicked = {
-            if(counter > 2)
-            {
+            if (counter > 2) {
                 counter--
             }
-            if (counter == 2)
-            {
+            if (counter == 2) {
                 removeComponents(p3Label)
                 removeComponents(p3Input)
             }
 
-            if (counter == 3)
-            {
+            if (counter == 3) {
                 removeComponents(p4Label)
                 removeComponents(p4Input)
             }
@@ -237,25 +229,16 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
     }
 
 
-
-
-
-
-
-
     override fun refreshAfterStartNewGame() = Unit
 
     override fun refreshHandCards() = Unit
 
-    override fun refreshPlayerLabel() = Unit
 
     override fun refreshMiddleCard() = Unit
 
-    override fun refreshAfterMove()  = Unit
+    override fun refreshAfterMove() = Unit
 
     override fun refreshAfterGameEnd() = Unit
-
-
 
 
 }

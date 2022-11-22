@@ -13,5 +13,4 @@ data class Player(
     var score: Double,
     var playerCards: MutableList<Card> = mutableListOf(),
     var hasPlayerKnocked: Boolean ,
-) {
-}
+)

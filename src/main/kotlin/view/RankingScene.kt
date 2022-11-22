@@ -52,8 +52,6 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
 
     override fun refreshHandCards() = Unit
 
-    override fun refreshPlayerLabel() = Unit
-
     override fun refreshMiddleCard() = Unit
 
     override fun refreshAfterMove() = Unit

@@ -47,7 +47,6 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
     override fun refreshHandCards() = Unit
 
-    override fun refreshPlayerLabel() = Unit
 
     override fun refreshMiddleCard() = Unit
 

@@ -16,7 +16,4 @@ data class World(
     var passCount: Int,
     var playerList:MutableList<Player> = mutableListOf(),
     var cardDeck: CardDeckStack
-) {
-
-
-}
+)

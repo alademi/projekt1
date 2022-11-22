@@ -39,7 +39,7 @@ class PlayerTest {
      * vergleiche zwischen zwei unterschiedlichen Spieler
      */
     @Test
-    fun playerTest()
+    fun testPlayer()
     {
         assertNotEquals(player1,player2)
         assertNotEquals(player1,player3)

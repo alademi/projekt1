@@ -339,7 +339,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
             }
         }
 
-
     }
 
 
@@ -418,10 +417,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     }
 
 
-    override fun refreshPlayerLabel() {
-        val game = mainService.currentGame
-        checkNotNull(game) { "No started game found" }
-    }
 
     override fun refreshMiddleCard() {
         cardMap.clear()

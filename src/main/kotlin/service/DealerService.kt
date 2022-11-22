@@ -151,7 +151,6 @@ class DealerService(private val mainService: MainService) : RefreshableService()
 
     fun showNextPlayer() {
         onAllRefreshables { refreshHandCards() }
-        onAllRefreshables { refreshPlayerLabel() }
     }
 
 
