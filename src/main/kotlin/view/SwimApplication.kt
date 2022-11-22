@@ -3,10 +3,16 @@ package view
 import tools.aqua.bgw.core.BoardGameApplication
 import service.MainService
 
+/**
+ *  Implementation von [BoardGameApplication] für das Spiel Schwimmen "Swim"
+ */
 class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
+    //mit mainservice kann man auf das aktuelle Spiel immer zugreifen
     private val mainService = MainService()
 
+
+    //schließt das Spiel, falls man quitButton anklickt
     private val startGameMenuScene = StartGameMenuScene(mainService).apply {
         quitButton.onMouseClicked = {
             exit()
@@ -15,7 +21,7 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
 
     private val gameScene = GameTableScene(mainService)
 
-
+//startet das Spiel wieder , falls auf newGameButton gedrückt wurde
     private val rankingScene = RankingScene(mainService).apply {
         newGameButton.onMouseClicked = {
             this@SwimApplication.showMenuScene(startGameMenuScene)

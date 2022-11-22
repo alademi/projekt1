@@ -240,7 +240,9 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     /**
      * diese Methode ist dafür zuständig, ein linearView für die Karten der Spieler und die mittleren Karten
-     * zu initialisieren.
+     * zu initialisieren. Dabei werden die mittleren Karten und die Karten der aktuellen Spieler angezeigt und die
+     * Karten der anderen Spieler ausgeblendet.
+     *
      * @param cards die Karten der Spieler/mittleren Karten
      * @param view das View der Karten z.B [currentPlayerHand1] , [middleCards]
      * @param cardImageLoader
@@ -259,7 +261,9 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
                 back = ImageVisual(cardImageLoader.backImage)
             )
 
+            //überprüfe, ob die zu aktualisierenden Karten die Karten der aktuellen Spieler sind
             val check1 = (cards == mainService.dealerService.getCurrentPlayer().playerCards)
+            //überprüfe, ob die zu aktualisierenden Karten die mittleren sind
             val check2 = (cards == mainService.dealerService.getMiddleCards())
             if (check1 || check2){
                 cardView.showFront() //zeige die vordere Seite der Karte
@@ -272,6 +276,12 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     }
 
 
+    /**
+     * Eine Hilfsmethode für das [swapButton] .
+     * Dabei werden erstmal die Views von [middleCards] und z.B [currentPlayerHand1] in festen Variablen gespeichert.
+     * Danach werden die ersten geklickten Karten in [middleCard] [playerCard] an die Methode changeSingleCard
+     * weitergegeben, um die Aktion swapOne durchführen zu können
+     */
     private fun swapVisual() {
 
 

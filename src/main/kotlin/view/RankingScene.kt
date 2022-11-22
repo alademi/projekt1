@@ -8,6 +8,11 @@ import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
 import java.awt.Color
 
+
+/**
+ * In dieser Klasse wird das Ergebnis des Spiels angezeigt. Zudem wird das [StartGameMenuScene] angezeigt , falls man
+ * auf [newGameButton] klickt oder wird [SwimApplication] geschlossen, falls [quitButton] .
+ */
 class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
     Refreshable {
 
