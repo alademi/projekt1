@@ -243,26 +243,17 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
 
 
 
-    override fun refreshAfterStartNewGame() {
+    override fun refreshAfterStartNewGame() = Unit
 
-    }
+    override fun refreshHandCards() = Unit
 
-    override fun refreshHandCards() {
-    }
+    override fun refreshPlayerLabel() = Unit
 
-    override fun refreshPlayerLabel() {
+    override fun refreshMiddleCard() = Unit
 
-    }
+    override fun refreshAfterMove()  = Unit
 
-    override fun refreshMiddleCard() {
-
-    }
-
-    override fun refreshAfterMove() {
-    }
-
-    override fun refreshAfterGameEnd() {
-    }
+    override fun refreshAfterGameEnd() = Unit
 
 
 

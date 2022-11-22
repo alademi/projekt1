@@ -151,7 +151,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ColorVisual(255, 255, 255, 50)
     )
 
-    val currentPlayerHand3 = LinearLayout<CardView>(
+    private val currentPlayerHand3 = LinearLayout<CardView>(
         height = 220,
         width = 500,
         posX = 1250,
@@ -161,7 +161,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ColorVisual(255, 255, 255, 50)
     ).apply { rotation = -90.0 }
 
-    val currentPlayerHand4 = LinearLayout<CardView>(
+    private val currentPlayerHand4 = LinearLayout<CardView>(
         height = 220,
         width = 500,
         posX = 100,
@@ -226,21 +226,24 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
     }
 
     private fun initializeCardView(
-        Cards: MutableList<Card>,
+        cards: MutableList<Card>,
         view: LinearLayout<CardView>,
         cardImageLoader: CardImageLoader
     ) {
         view.clear()
-        Cards.reversed().forEach { card ->
+        cards.reversed().forEach { card ->
             val cardView = CardView(
                 height = 200,
                 width = 130,
                 front = ImageVisual(cardImageLoader.frontImageFor(card.symbol, card.number)),
                 back = ImageVisual(cardImageLoader.backImage)
             )
-            if (Cards == mainService.dealerService.getCurrentPlayer().playerCards || Cards == mainService.dealerService.getMiddleCards()) {
+            val check1 = (cards == mainService.dealerService.getCurrentPlayer().playerCards)
+            val check2 = (cards == mainService.dealerService.getMiddleCards())
+            if (check1 || check2){
                 cardView.showFront()
             }
+
             view.add(cardView)
             cardMap.add(card to cardView)
         }
@@ -345,17 +348,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found." }
         cardMap.clear()
-        if (components.contains(currentPlayerHand3))
-        {
-            removeComponents(currentPlayerHand3)
-            removeComponents(playerName3)
-        }
-        if (components.contains(currentPlayerHand4))
-        {
-            removeComponents(currentPlayerHand4)
-            removeComponents(playerName4)
-        }
-
 
         passCounter.text = "Pass Counter : ${game.passCount}"
         hasPlayerKnocked.text = "Knocked : No"
@@ -442,7 +434,14 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
 
     override fun refreshAfterGameEnd() {
-
+        if (components.contains(currentPlayerHand3)) {
+            removeComponents(currentPlayerHand3)
+            removeComponents(playerName3)
+        }
+        if (components.contains(currentPlayerHand4)) {
+            removeComponents(currentPlayerHand4)
+            removeComponents(playerName4)
+        }
     }
 
 

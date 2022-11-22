@@ -45,20 +45,13 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
         this.hideMenuScene()
     }
 
-    override fun refreshHandCards() {
-    }
+    override fun refreshHandCards() = Unit
 
-    override fun refreshPlayerLabel() {
+    override fun refreshPlayerLabel() = Unit
 
-    }
+    override fun refreshMiddleCard() = Unit
 
-    override fun refreshMiddleCard() {
-
-    }
-
-    override fun refreshAfterMove() {
-
-    }
+    override fun refreshAfterMove() = Unit
 
     override fun refreshAfterGameEnd() {
         val game = mainService.currentGame
