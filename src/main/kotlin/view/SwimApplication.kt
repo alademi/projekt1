@@ -36,8 +36,7 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
         )
 
 
-
-       // mainService.startNewGame(startGameMenuScene.)
+        // mainService.startNewGame(startGameMenuScene.)
         this.showGameScene(gameScene)
         this.showMenuScene(startGameMenuScene, 0)
     }
@@ -65,11 +64,8 @@ class SwimApplication : BoardGameApplication("SwimGame"), Refreshable {
         val game = mainService.currentGame
         checkNotNull(game)
         this.showMenuScene(rankingScene)
-        println(startGameMenuScene.nameList)
 
-
-        for(player in game.playerList)
-        {
+        for (player in game.playerList) {
             startGameMenuScene.nameList.remove(player.name)
         }
 

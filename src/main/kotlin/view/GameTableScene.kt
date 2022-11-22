@@ -88,7 +88,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ImageVisual("GameTable_Button_SwapOne.png")
     ).apply {
         onMouseClicked = {
-            //  selectPlayerCard()
             swapVisual()
         }
     }
@@ -152,7 +151,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ColorVisual(255, 255, 255, 50)
     )
 
-    private val currentPlayerHand3 = LinearLayout<CardView>(
+    val currentPlayerHand3 = LinearLayout<CardView>(
         height = 220,
         width = 500,
         posX = 1250,
@@ -162,7 +161,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         visual = ColorVisual(255, 255, 255, 50)
     ).apply { rotation = -90.0 }
 
-    private val currentPlayerHand4 = LinearLayout<CardView>(
+    val currentPlayerHand4 = LinearLayout<CardView>(
         height = 220,
         width = 500,
         posX = 100,
@@ -179,7 +178,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         posX = 800,
         posY = 400,
         spacing = -50,
-        // alignment = Alignment.CENTER,
         visual = ColorVisual(255, 255, 255, 50)
     )
 
@@ -258,7 +256,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val pView2 = cardMap.forward(pCards[1])
         val pView3 = cardMap.forward(pCards[2])
         val mCards = mainService.dealerService.getMiddleCards()
-        println(mCards)
         val mView2 = cardMap.forward(mCards[1])
         val mView3 = cardMap.forward(mCards[2])
         val mView1 = cardMap.forward(mCards[0])
@@ -348,10 +345,18 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val currentPlayer = mainService.dealerService.getCurrentPlayer()
         checkNotNull(game) { "No started game found." }
         cardMap.clear()
-        currentPlayerHand1.clear()
-        currentPlayerHand2.clear()
-        currentPlayerHand3.clear()
-        currentPlayerHand4.clear()
+        if (components.contains(currentPlayerHand3))
+        {
+            removeComponents(currentPlayerHand3)
+            removeComponents(playerName3)
+        }
+        if (components.contains(currentPlayerHand4))
+        {
+            removeComponents(currentPlayerHand4)
+            removeComponents(playerName4)
+        }
+
+
         passCounter.text = "Pass Counter : ${game.passCount}"
         hasPlayerKnocked.text = "Knocked : No"
 
@@ -363,26 +368,25 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         playerName1.text = game.playerList[0].name
         playerName2.text = game.playerList[1].name
 
-        if (game.playerList.size == 3) {
-            addComponents(currentPlayerHand3)
-            addComponents(playerName3)
-            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
-            playerName3.text = game.playerList[2].name
+        println(game.playerList.size)
+        if (game.playerList.size >= 3) {
+            if (!components.contains(currentPlayerHand3)) {
+                addComponents(currentPlayerHand3)
+                addComponents(playerName3)
+                initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
+                playerName3.text = game.playerList[2].name
+            }
+            if (game.playerList.size == 4) {
+                if (!components.contains(currentPlayerHand4)) {
+                    addComponents(currentPlayerHand4)
+                    addComponents(playerName4)
+                    initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
+                    playerName4.text = game.playerList[3].name
+
+                }
+            }
+
         }
-
-        if (game.playerList.size == 4) {
-            addComponents(currentPlayerHand3)
-            initializeCardView(game.playerList[2].playerCards, currentPlayerHand3, cardImageLoader)
-            addComponents(playerName3)
-            addComponents(currentPlayerHand4)
-            initializeCardView(game.playerList[3].playerCards, currentPlayerHand4, cardImageLoader)
-            addComponents(playerName4)
-            playerName3.text = game.playerList[2].name
-            playerName4.text = game.playerList[3].name
-
-        }
-
-
     }
 
     override fun refreshAfterMove() {

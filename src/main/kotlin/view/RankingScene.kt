@@ -22,9 +22,9 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
 
     private val p2Score = Label(width = 300, height = 35, posX = 50, posY = 160)
 
-    private val p3score = Label(width = 300, height = 35, posX = 50, posY = 195)
+    val p3score = Label(width = 300, height = 35, posX = 50, posY = 195)
 
-    private val p4score = Label(width = 300, height = 35, posX = 50, posY = 230)
+    val p4score = Label(width = 300, height = 35, posX = 50, posY = 230)
 
 
     val quitButton = Button(width = 140, height = 35, posX = 50, posY = 295, text = "Quit").apply {
@@ -42,7 +42,12 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
     }
 
     override fun refreshAfterStartNewGame() {
-
+        if (components.contains(p3score)) {
+            removeComponents(p3score)
+        }
+        if (components.contains(p4score)) {
+            removeComponents(p4score)
+        }
     }
 
     override fun refreshHandCards() {
@@ -67,19 +72,21 @@ class RankingScene(private val mainService: MainService) : MenuScene(400, 1080),
         p1Score.text = "${game.playerList[0].name} scored ${game.playerList[0].score}"
         p2Score.text = "${game.playerList[1].name} scored ${game.playerList[1].score}"
 
-        if (game.playerList.size == 3) {
+        if (game.playerList.size >= 3) {
             p3score.text = "${game.playerList[2].name} scored ${game.playerList[2].score}"
-            addComponents(p3score)
-        }
+            if (!components.contains(p3score)) {
+                addComponents(p3score)
+            }
+            if (game.playerList.size == 4) {
+                p4score.text = "${game.playerList[3].name} scored ${game.playerList[3].score}"
+                if (!components.contains(p4score)) {
+                    addComponents(p4score)
+                }
 
-        if (game.playerList.size == 4) {
-            p3score.text = "${game.playerList[2].name} scored ${game.playerList[2].score}"
-            p4score.text = "${game.playerList[3].name} scored ${game.playerList[3].score}"
-            addComponents(p3score)
-            addComponents(p4score)
+            }
+
         }
 
     }
-
 
 }

@@ -121,7 +121,7 @@ class StartGameMenuScene(private val mainService: MainService) : MenuScene(600, 
 
         ).apply {
         onMouseClicked = {
-            println(nameList)
+
             nameList.add(p1Input.text)
             nameList.add(p2Input.text)
 
