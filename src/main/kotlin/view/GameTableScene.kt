@@ -265,7 +265,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
             val check1 = (cards == mainService.dealerService.getCurrentPlayer().playerCards)
             //überprüfe, ob die zu aktualisierenden Karten die mittleren sind
             val check2 = (cards == mainService.dealerService.getMiddleCards())
-            if (check1 || check2){
+            if (check1 || check2) {
                 cardView.showFront() //zeige die vordere Seite der Karte
             }
 
@@ -282,6 +282,8 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
      * Danach werden die ersten geklickten Karten in [middleCard] [playerCard] an die Methode changeSingleCard
      * weitergegeben, um die Aktion swapOne durchführen zu können
      */
+
+
     private fun swapVisual() {
 
 
@@ -289,16 +291,31 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         val pView1 = cardMap.forward(pCards[0])
         val pView2 = cardMap.forward(pCards[1])
         val pView3 = cardMap.forward(pCards[2])
+
+
+        pView1.apply {
+            middleVisual(pView1)
+        }
+
+        pView2.apply {
+            middleVisual(pView2)
+        }
+        pView3.apply {
+            middleVisual(pView3)
+        }
+
+
+    }
+
+    private fun middleVisual(view: CardView) {
         val mCards = mainService.dealerService.getMiddleCards()
         val mView2 = cardMap.forward(mCards[1])
         val mView3 = cardMap.forward(mCards[2])
         val mView1 = cardMap.forward(mCards[0])
 
-
-
-        pView1.apply {
+        view.apply {
             onMouseClicked = {
-                playerCard = cardMap.backward(pView1)
+                playerCard = cardMap.backward(view)
                 mView1.apply {
                     onMouseClicked = {
                         middleCard = cardMap.backward(mView1)
@@ -317,59 +334,8 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
                         mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
                     }
                 }
-
             }
         }
-        pView2.apply {
-            onMouseClicked = {
-                playerCard = cardMap.backward(pView2)
-                mView1.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView1)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-                mView2.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView2)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-                mView3.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView3)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-
-            }
-        }
-
-        pView3.apply {
-            onMouseClicked = {
-                playerCard = cardMap.backward(pView3)
-                mView1.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView1)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-                mView2.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView2)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-                mView3.apply {
-                    onMouseClicked = {
-                        middleCard = cardMap.backward(mView3)
-                        mainService.playerActionService.changeSingleCard(playerCard!!, middleCard!!)
-                    }
-                }
-
-            }
-        }
-
     }
 
 
@@ -446,7 +412,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         }
 
     }
-
 
 
     override fun refreshMiddleCard() {

@@ -11,9 +11,13 @@ import kotlin.test.assertTrue
  */
 class MainServiceTest {
 
-
+    //intializiere eine Liste von Namen , um das Spiel zu starten
     val playerlist = listOf<String>("Aziz", "Ahmed", "Ali", "Sam")
 
+
+    /**
+     * testet die Funktionalität der Methoden in [MainService]
+     */
     @Test
     fun test() {
 
