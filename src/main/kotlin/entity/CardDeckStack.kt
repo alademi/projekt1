@@ -49,6 +49,10 @@ class CardDeckStack(private val random: Random = Random) {
     }
 
 
+    /**
+     * provides a view of the full stack contents without changing it. Use [draw]
+     * for actually drawing cards from this stack.
+     */
 
     fun peekAll(): List<Card> = cards.toList()
 

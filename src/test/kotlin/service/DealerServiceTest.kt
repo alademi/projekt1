@@ -37,6 +37,10 @@ class DealerServiceTest {
     private val listCards4 = mutableListOf<Card>(card10, card11, card12)
     private val listCards5 = mutableListOf<Card>(card13, card14, card15)
 
+
+    /**
+     * testet die Funktionalität der Methoden bei [DealerService]
+     */
     @Test
     fun test()
     {
