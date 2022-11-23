@@ -18,7 +18,9 @@ abstract class RefreshableService {
         refreshables.add(re)
     }
 
-
+    /**
+     *
+     */
     fun onAllRefreshables(method: Refreshable.() -> Unit) = refreshables.forEach { it.method()  }
 
 }

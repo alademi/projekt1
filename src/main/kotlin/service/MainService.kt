@@ -99,7 +99,9 @@ class MainService {
     }
 
 
-
+    /**
+     *
+     */
     fun addRefreshables(vararg newRefreshables: Refreshable) {
         newRefreshables.forEach { addRefreshable(it) }
     }
