@@ -64,6 +64,7 @@ class PlayerActionTest {
         val player2 = game.dealerService.getPreviousPlayer()
         assertTrue(player2.hasPlayerKnocked)
 
+
     }
 
     /**

@@ -4,6 +4,7 @@ package entity
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 
 
@@ -41,6 +42,7 @@ class PlayerTest {
     @Test
     fun testPlayer()
     {
+        assertNotNull(player1)
         assertNotEquals(player1,player2)
         assertNotEquals(player1,player3)
         assertNotEquals(player1,player4)
@@ -50,6 +52,7 @@ class PlayerTest {
         assertEquals(player1.score,player4.score)
         assertEquals(player1.playerCards,player5.playerCards)
         assertEquals(player1.hasPlayerKnocked,false)
+
 
     }
 }

@@ -1,6 +1,7 @@
 package service
 
 
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -11,8 +12,9 @@ import kotlin.test.assertTrue
  */
 class MainServiceTest {
 
-    //intializiere eine Liste von Namen , um das Spiel zu starten
+    //intializiere eine Liste von Namen, um das Spiel zu starten
     val playerlist = listOf<String>("Aziz", "Ahmed", "Ali", "Sam")
+
 
 
     /**
