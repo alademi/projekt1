@@ -67,11 +67,9 @@ class CardDeckStack(private val random: Random = Random) {
         cards.forEach(this.cards::addFirst)
     }
 
-    /**
-     * puts the given card on top of this card stack
-     */
 
 
-    override fun toString(): String = cards.toString()
+
+
 }
 

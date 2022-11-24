@@ -357,7 +357,6 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
         playerName1.text = game.playerList[0].name
         playerName2.text = game.playerList[1].name
 
-        println(game.playerList.size)
         if (game.playerList.size >= 3) {
             if (!components.contains(currentPlayerHand3)) {
                 addComponents(currentPlayerHand3)
