@@ -195,7 +195,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     init {
 
-        //background = ImageVisual("StartGame_Bg.png")
+        background = ColorVisual(68,164,144)
 
         addComponents(
             playStack,
