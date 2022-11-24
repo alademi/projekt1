@@ -24,7 +24,7 @@ import java.awt.Color
  *
  */
 
-class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080, background = ImageVisual("StartGame_Bg.png")), Refreshable {
+class GameTableScene(private val mainService: MainService) : BoardGameScene(1920, 1080), Refreshable {
 
 
     private var playerCard: Card? = null
@@ -195,6 +195,7 @@ class GameTableScene(private val mainService: MainService) : BoardGameScene(1920
 
     init {
 
+        //background = ImageVisual("StartGame_Bg.png")
 
         addComponents(
             playStack,
